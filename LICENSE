@@ -1,0 +1,87 @@
+MIT License with Ethical Use Clause
+
+Copyright (c) 2024 Yashab Alam - ZehraSec
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+ETHICAL USE CLAUSE:
+
+This software is designed exclusively for authorized security testing, 
+penetration testing, cybersecurity research, and educational purposes. 
+By using this software, you agree to the following ethical use requirements:
+
+1. AUTHORIZED USE ONLY: You must obtain explicit written authorization before 
+   testing any system, network, or service that you do not own or have 
+   explicit permission to test.
+
+2. LEGAL COMPLIANCE: You must comply with all applicable laws, regulations, 
+   and terms of service in your jurisdiction and the jurisdiction where the 
+   software is used.
+
+3. RESPONSIBLE DISCLOSURE: Any vulnerabilities or security issues discovered 
+   must be responsibly disclosed to the appropriate parties.
+
+4. NO MALICIOUS USE: This software must not be used for any illegal, 
+   unethical, or malicious purposes including but not limited to:
+   - Unauthorized access to systems or data
+   - Data theft or exfiltration
+   - Service disruption or denial of service attacks
+   - Privacy violations or unauthorized surveillance
+   - Fraud, harassment, or any form of abuse
+   - Circumventing legitimate security measures for illegal purposes
+
+5. PROFESSIONAL RESPONSIBILITY: Users must maintain proper documentation 
+   of authorized activities and follow industry best practices for 
+   cybersecurity testing.
+
+6. EDUCATIONAL PURPOSE: When used for educational purposes, it must be in 
+   controlled environments with proper supervision and ethical guidelines.
+
+DISCLAIMER:
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+The authors and contributors of this software are not responsible for any 
+misuse of this tool. Users are solely responsible for ensuring their use 
+complies with all applicable laws and ethical standards.
+
+---
+
+ADDITIONAL TERMS FOR COMMERCIAL USE:
+
+For commercial use, enterprise licensing, or integration into commercial 
+products, please contact:
+
+Yashab Alam
+Founder & CEO, ZehraSec
+Email: yashabalam707@gmail.com
+Website: https://zehrasec.com
+
+---
+
+ATTRIBUTION:
+
+When redistributing or referencing this software, please maintain proper 
+attribution to:
+
+- Developer: Yashab Alam
+- Organization: ZehraSec
+- Project: CyberRotate Pro
+- Repository: github.com/yashab-cyber/cyberrotate-pro
+
+For support, contributions, or professional inquiries, visit:
+https://github.com/yashab-cyber/cyberrotate-pro

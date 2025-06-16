@@ -1,0 +1,83 @@
+{
+  "servers": [
+    {
+      "name": "US-East-1",
+      "config_file": "us-east-1.ovpn",
+      "country": "United States",
+      "city": "New York",
+      "server": "us-east-1.example-vpn.com",
+      "port": 1194,
+      "protocol": "udp",
+      "auth_file": "auth.txt",
+      "ca_file": "ca.crt",
+      "cert_file": "client.crt",
+      "key_file": "client.key"
+    },
+    {
+      "name": "US-West-1",
+      "config_file": "us-west-1.ovpn",
+      "country": "United States", 
+      "city": "Los Angeles",
+      "server": "us-west-1.example-vpn.com",
+      "port": 1194,
+      "protocol": "udp",
+      "auth_file": "auth.txt",
+      "ca_file": "ca.crt",
+      "cert_file": "client.crt",
+      "key_file": "client.key"
+    },
+    {
+      "name": "UK-London",
+      "config_file": "uk-london.ovpn",
+      "country": "United Kingdom",
+      "city": "London",
+      "server": "uk-london.example-vpn.com",
+      "port": 1194,
+      "protocol": "udp",
+      "auth_file": "auth.txt",
+      "ca_file": "ca.crt",
+      "cert_file": "client.crt",
+      "key_file": "client.key"
+    },
+    {
+      "name": "DE-Frankfurt",
+      "config_file": "de-frankfurt.ovpn",
+      "country": "Germany",
+      "city": "Frankfurt",
+      "server": "de-frankfurt.example-vpn.com",
+      "port": 1194,
+      "protocol": "udp",
+      "auth_file": "auth.txt",
+      "ca_file": "ca.crt",
+      "cert_file": "client.crt",
+      "key_file": "client.key"
+    },
+    {
+      "name": "JP-Tokyo",
+      "config_file": "jp-tokyo.ovpn",
+      "country": "Japan",
+      "city": "Tokyo",
+      "server": "jp-tokyo.example-vpn.com",
+      "port": 1194,
+      "protocol": "udp",
+      "auth_file": "auth.txt",
+      "ca_file": "ca.crt",
+      "cert_file": "client.crt",
+      "key_file": "client.key"
+    }
+  ],
+  "connection_settings": {
+    "timeout": 30,
+    "retry_attempts": 3,
+    "verify_ssl": true,
+    "compression": true,
+    "keepalive": "10 120"
+  },
+  "security_settings": {
+    "cipher": "AES-256-CBC",
+    "auth": "SHA256",
+    "tls_auth": true,
+    "verify_x509_name": true,
+    "remote_cert_tls": "server"
+  }
+}

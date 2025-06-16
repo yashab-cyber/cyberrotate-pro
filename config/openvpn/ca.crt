@@ -1,0 +1,9 @@
+# Sample CA Certificate File
+# This is a placeholder for the Certificate Authority certificate
+# In a real deployment, replace this with your actual CA certificate
+
+-----BEGIN CERTIFICATE-----
+SAMPLE_CA_CERTIFICATE_CONTENT_GOES_HERE
+This is a placeholder file for the OpenVPN CA certificate.
+Replace this entire content with your actual CA certificate.
+-----END CERTIFICATE-----

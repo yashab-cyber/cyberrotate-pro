@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=CyberRotate Pro
+Comment=IP Rotation & Anonymity Suite
+Exec=/usr/bin/python3 %{PROJECT_PATH}/gui_launcher.py
+Icon=%{PROJECT_PATH}/assets/icon.png
+Terminal=false
+Categories=Network;Security;
+Keywords=VPN;Proxy;Tor;Anonymity;Security;Privacy;
+StartupNotify=true
+MimeType=application/x-cyberrotate-profile;

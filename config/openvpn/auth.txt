@@ -1,0 +1,6 @@
+# OpenVPN Authentication File
+# Replace with your actual VPN credentials
+# Format: username on first line, password on second line
+
+username
+password

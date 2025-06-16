@@ -1,0 +1,86 @@
+{
+  "rotation_settings": {
+    "methods": ["proxy", "openvpn"],
+    "interval": 10,
+    "max_retries": 3,
+    "timeout": 10,
+    "fail_threshold": 5,
+    "geolocation_targeting": false,
+    "countries": [],
+    "random_interval": false,
+    "min_interval": 5,
+    "max_interval": 30
+  },
+  "security_settings": {
+    "dns_leak_protection": true,
+    "webrtc_protection": true,
+    "user_agent_rotation": true,
+    "ip_reputation_check": true,
+    "connection_fingerprinting": true,
+    "traffic_obfuscation": false
+  },
+  "monitoring": {
+    "logging_enabled": true,
+    "stats_collection": true,
+    "export_format": "json",
+    "real_time_dashboard": true,
+    "performance_monitoring": true,
+    "leak_detection_interval": 300
+  },
+  "advanced": {
+    "geolocation_targeting": false,
+    "load_balancing": true,
+    "circuit_renewal": 600,
+    "proxy_validation": true,
+    "connection_pooling": true,
+    "fail_safe_mechanisms": true
+  },
+  "openvpn": {
+    "config_directory": "config/openvpn",
+    "auto_connect": false,
+    "connection_timeout": 30,
+    "retry_attempts": 3,
+    "preferred_protocols": ["udp", "tcp"],
+    "preferred_ports": [1194, 443, 80]
+  },
+  "proxy": {
+    "validation_timeout": 10,
+    "max_concurrent_tests": 10,
+    "retry_failed_proxies": true,
+    "blacklist_failed_ips": true,
+    "use_custom_user_agents": true
+  },
+  "tor": {
+    "control_port": 9051,
+    "socks_port": 9050,
+    "circuit_renewal_interval": 600,
+    "max_circuit_dirtiness": 10,
+    "use_guards": true
+  },
+  "logging": {
+    "level": "INFO",
+    "file_rotation": true,
+    "max_file_size": "10MB",
+    "backup_count": 5,
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  },
+  "api": {
+    "enabled": false,
+    "host": "127.0.0.1",
+    "port": 8080,
+    "authentication": true,
+    "rate_limiting": true
+  },
+  "profiles": {
+    "default": "research",
+    "available": [
+      "penetration_testing",
+      "research", 
+      "bug_bounty",
+      "training",
+      "stealth"
+    ]
+  },
+  "debug_mode": false,
+  "version": "1.0.0"
+}

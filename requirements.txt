@@ -1,0 +1,36 @@
+# Core Dependencies
+requests==2.31.0
+pysocks==1.7.1
+stem==1.8.1
+colorama==0.4.6
+psutil==5.9.6
+netifaces==0.11.0
+python-nmap==0.7.1
+
+# Security Dependencies
+cryptography>=3.4.8
+pyopenssl>=21.0.0
+certifi>=2021.10.8
+urllib3>=1.26.7
+
+# Configuration and Data
+pyyaml==6.0.1
+jsonschema==4.19.2
+
+# Optional Professional Features
+beautifulsoup4==4.12.2
+pandas>=2.2.0
+matplotlib>=3.8.0
+numpy>=1.26.0
+
+# CLI and Interface
+click==8.1.7
+rich==13.7.0
+
+# API Server
+flask>=2.3.0
+flask-cors>=4.0.0
+
+# GUI Dependencies (Optional)
+Pillow>=8.0.0
+pystray>=0.19.0

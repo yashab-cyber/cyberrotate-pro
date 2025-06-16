@@ -1,0 +1,18 @@
+# Full Feature Dependencies (includes all core + professional features)
+-r requirements.txt
+
+# Advanced Network Analysis
+scapy==2.5.0
+
+# Web Browser Automation (for testing)
+selenium==4.15.0
+
+# Additional Data Processing
+plotly==5.17.0
+dash==2.14.2
+
+# Advanced Logging
+loguru==0.7.2
+
+# HTTP/2 Support
+httpx==0.25.2
