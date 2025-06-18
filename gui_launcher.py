@@ -120,19 +120,27 @@ def launch_advanced_gui():
         except Exception as e:
             print(f"⚠ Theme application failed: {e}")
         
-        # Add system tray support
+        # Add system tray support (after GUI is fully initialized)
+        tray = None
         try:
+            # Ensure the GUI is fully initialized before creating system tray
+            app.root.update_idletasks()
+            
+            # Create system tray
             tray = SystemTrayIcon(app)
             tray.run()
             print("✓ System tray enabled")
         except Exception as e:
             print(f"⚠ System tray failed: {e}")
+            # Continue without system tray
         
         # Run the application
         app.run()
         
     except Exception as e:
         print(f"Failed to launch advanced GUI: {e}")
+        import traceback
+        traceback.print_exc()
         return 1
     
     return 0

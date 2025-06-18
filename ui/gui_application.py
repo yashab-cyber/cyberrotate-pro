@@ -417,8 +417,7 @@ class CyberRotateGUI:
             info += f"Proxy Status: {self.proxy_status}\n"
             info += f"VPN Status: {self.vpn_status}\n"
             info += f"Tor Status: {self.tor_status}\n\n"
-            
-            # Add additional network details
+              # Add additional network details
             try:
                 network_details = self.network_monitor.get_network_details()
                 for key, value in network_details.items():
@@ -470,8 +469,13 @@ class CyberRotateGUI:
         timestamp = datetime.now().strftime("%H:%M:%S")
         log_entry = f"[{timestamp}] {level}: {message}\n"
         
-        self.log_text.insert(tk.END, log_entry)
-        self.log_text.see(tk.END)
+        # Safety check - ensure log_text widget exists
+        if hasattr(self, 'log_text') and self.log_text:
+            self.log_text.insert(tk.END, log_entry)
+            self.log_text.see(tk.END)
+        else:
+            # Fallback to print if widget not ready
+            print(f"[{timestamp}] {level}: {message}")
         
         # Also log to file
         self.logger.info(message)
