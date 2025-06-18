@@ -26,10 +26,10 @@ class NetworkSpeedGauge:
         self.parent = parent
         self.title = title
         self.current_speed = 0
-        self.max_speed = 100
-        
+        self.max_speed = 100        
         self.create_gauge()
-          def create_gauge(self):
+    
+    def create_gauge(self):
         """Create the speed gauge"""
         self.frame = ttk.LabelFrame(self.parent, text=self.title, padding="10")
         
@@ -59,11 +59,11 @@ class NetworkSpeedGauge:
         # Embed in tkinter
         self.canvas = FigureCanvasTkAgg(self.fig, self.frame)
         self.canvas.get_tk_widget().pack(fill="both", expand=True)
-        
-        # Speed label
+          # Speed label
         self.speed_label = ttk.Label(self.frame, text="0 Mbps", font=('Arial', 12, 'bold'))
         self.speed_label.pack()
-          def update_speed(self, speed):
+    
+    def update_speed(self, speed):
         """Update the gauge with new speed value"""
         self.current_speed = speed
         

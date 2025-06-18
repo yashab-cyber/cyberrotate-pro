@@ -196,22 +196,66 @@ def show_startup_splash():
     
     progress_bar = tk.Frame(progress_bg, bg='#0066cc', height=4)
     progress_bar.pack(side="left", fill="y")
+      # Animate progress bar
+    progress_step = [0]  # Use list to make it mutable in nested function
     
-    # Animate progress bar
     def animate_progress():
-        for i in range(101):
-            progress_bar.config(width=int(300 * i / 100))
-            splash.update()
-            splash.after(20)
+        if progress_step[0] <= 100:
+            try:
+                # Check if window still exists
+                if splash.winfo_exists():
+                    progress_bar.config(width=int(300 * progress_step[0] / 100))
+                    splash.update_idletasks()
+                    progress_step[0] += 2
+                    # Schedule next animation step
+                    splash.after(40, animate_progress)
+            except tk.TclError:
+                # Window was destroyed, stop animation
+                pass
     
-    # Show splash for 2 seconds
+    def close_splash():
+        try:
+            if splash.winfo_exists():
+                splash.destroy()
+        except tk.TclError:
+            pass
+    
+    # Start animation and schedule close
     splash.after(100, animate_progress)
-    splash.after(2000, splash.destroy)
+    splash.after(2000, close_splash)
     
     splash.mainloop()
 
+def print_banner():
+    """Print the CyberRotate Pro banner"""
+    banner = """
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                          CYBERROTATE PRO GLOBAL NETWORK                      ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║                                                                              ║
+║   203.0.113.5 ──┐              ╭───────────╮              ┌── 8.8.8.8       ║
+║                 │              │     🌍     │              │                 ║
+║   1.1.1.1 ──────┼──────────────│   EARTH   │──────────────┼──── 9.9.9.9     ║
+║                 │              │  NETWORK  │              │                 ║
+║   74.125.224.72 ─┘              ╰───────────╯              └─ 208.67.222.222 ║
+║                                                                              ║
+║   ┌─── LIVE STATUS ──────────────────────────────────────────────────────┐   ║
+║   │ 🔄 Current: 185.199.108.153 ➤ 104.21.14.101 ➤ 151.101.193.140      │   ║
+║   │ 🌐 Nodes: 847 servers • 195 countries • 99.97% uptime              │   ║
+║   │ 🛡️ Security: Zero logs • Kill switch • DNS leak protection          │   ║
+║   └──────────────────────────────────────────────────────────────────────┘   ║
+║                                                                              ║
+║                    🔒 Professional IP Rotation Suite 🔒                     ║
+║                         Created by Yashab Alam - ZehraSec                   ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+    """
+    print(banner)
+
 def main():
     """Main launcher function"""
+    print_banner()
+    
     import argparse
     
     parser = argparse.ArgumentParser(description='CyberRotate Pro GUI Launcher')
@@ -247,6 +291,9 @@ def main():
             show_startup_splash()
         except Exception as e:
             print(f"Splash screen failed: {e}")
+    
+    # Print banner
+    print_banner()
     
     # Determine launch mode
     launch_mode = args.mode

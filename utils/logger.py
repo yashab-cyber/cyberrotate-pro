@@ -359,3 +359,56 @@ def get_log_summary() -> dict:
             print(f"Error reading log file {log_file}: {e}")
     
     return summary
+
+class Logger:
+    """
+    Main Logger class for CyberRotate Pro GUI and CLI applications
+    Provides a unified interface for all logging operations
+    """
+    
+    def __init__(self, name: str = "CyberRotate", debug: bool = False, log_file: Optional[str] = None):
+        """Initialize logger with security, performance, and audit capabilities"""
+        self.logger = setup_logger(name, debug, log_file)
+        self.security_logger = SecurityLogger(self.logger)
+        self.performance_logger = PerformanceLogger(self.logger)
+        self.audit_logger = AuditLogger(self.logger)
+    
+    def debug(self, message: str):
+        """Log debug message"""
+        self.logger.debug(message)
+    
+    def info(self, message: str):
+        """Log info message"""
+        self.logger.info(message)
+    
+    def warning(self, message: str):
+        """Log warning message"""
+        self.logger.warning(message)
+    
+    def error(self, message: str):
+        """Log error message"""
+        self.logger.error(message)
+    
+    def critical(self, message: str):
+        """Log critical message"""
+        self.logger.critical(message)
+    
+    def log_rotation(self, method: str, success: bool, ip_address: str = None):
+        """Log IP rotation events"""
+        self.security_logger.log_rotation(method, success, ip_address)
+    
+    def log_connection_attempt(self, target: str, method: str, success: bool):
+        """Log connection attempts"""
+        self.security_logger.log_connection_attempt(target, method, success)
+    
+    def log_operation_time(self, operation: str, duration: float, success: bool = True):
+        """Log operation performance"""
+        self.performance_logger.log_operation_time(operation, duration, success)
+    
+    def log_user_action(self, action: str, user: str = "system", details: dict = None):
+        """Log user actions for audit trail"""
+        self.audit_logger.log_user_action(action, user, details)
+    
+    def get_performance_stats(self) -> dict:
+        """Get performance statistics"""
+        return self.performance_logger.get_performance_stats()
