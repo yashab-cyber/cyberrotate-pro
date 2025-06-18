@@ -46,13 +46,15 @@ class TestProxyManager(unittest.TestCase):
         # Create test proxy files
         with open(self.config['proxy_files']['http'], 'w') as f:
             f.write("127.0.0.1:8080\n")
-            f.write("192.168.1.100:3128\n")
-        
+            f.write("192.168.1.100:3128\n")        
         with open(self.config['proxy_files']['socks'], 'w') as f:
             f.write("127.0.0.1:1080\n")
             f.write("192.168.1.101:1080\n")
         
-        self.proxy_manager = ProxyManager(self.config)
+        # Create test logger
+        import logging
+        test_logger = logging.getLogger('test')
+        self.proxy_manager = ProxyManager(test_logger)
     
     def tearDown(self):
         """Clean up test fixtures"""
@@ -125,9 +127,11 @@ class TestOpenVPNManager(unittest.TestCase):
             f.write("client\n")
             f.write("dev tun\n")
             f.write("proto udp\n")
-            f.write("remote test.example.com 1194\n")
-        
-        self.vpn_manager = OpenVPNManager(self.config)
+            f.write("remote test.example.com 1194\n")        
+        # Create test logger
+        import logging
+        test_logger = logging.getLogger('test_vpn')
+        self.vpn_manager = OpenVPNManager(test_logger)
     
     def tearDown(self):
         """Clean up test fixtures"""
@@ -165,9 +169,11 @@ class TestTorController(unittest.TestCase):
             'socks_port': 9050,
             'control_port': 9051,
             'control_password': 'test_password',
-            'auto_start': False
-        }
-        self.tor_controller = TorController(self.config)
+            'auto_start': False        }
+        # Create test logger
+        import logging
+        test_logger = logging.getLogger('test_tor')
+        self.tor_controller = TorController(test_logger)
     
     def test_initialization(self):
         """Test Tor controller initialization"""
@@ -275,7 +281,10 @@ class TestStatsCollector(unittest.TestCase):
     
     def setUp(self):
         """Set up test fixtures"""
-        self.stats_collector = StatsCollector()
+        import logging
+        test_logger = logging.getLogger('test_stats')
+        test_logger.setLevel(logging.INFO)
+        self.stats_collector = StatsCollector(test_logger)
     
     def test_increment_counter(self):
         """Test counter increment"""
@@ -329,8 +338,7 @@ class TestIntegration(unittest.TestCase):
         
         # Create test files
         with open(self.config['proxy']['proxy_files']['http'], 'w') as f:
-            f.write("127.0.0.1:8080\n")
-        
+            f.write("127.0.0.1:8080\n")        
         with open(self.config['proxy']['proxy_files']['socks'], 'w') as f:
             f.write("127.0.0.1:1080\n")
         
@@ -344,11 +352,13 @@ class TestIntegration(unittest.TestCase):
     
     def test_component_initialization(self):
         """Test that all components can be initialized"""
-        proxy_manager = ProxyManager(self.config['proxy'])
-        vpn_manager = OpenVPNManager(self.config['openvpn'])
-        tor_controller = TorController(self.config['tor'])
-        network_monitor = NetworkMonitor()
-        security_utils = SecurityUtils()
+        import logging
+        test_logger = logging.getLogger('test_integration')
+        proxy_manager = ProxyManager(test_logger)
+        vpn_manager = OpenVPNManager(test_logger)
+        tor_controller = TorController(test_logger)
+        network_monitor = NetworkMonitor(test_logger)
+        security_utils = SecurityUtils(test_logger)
         
         self.assertIsNotNone(proxy_manager)
         self.assertIsNotNone(vpn_manager)

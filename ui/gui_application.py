@@ -32,17 +32,15 @@ class CyberRotateGUI:
     def __init__(self, config_file: str = "config/config.json"):
         self.config_file = config_file
         self.config = self.load_config()
-        
-        # Initialize core components
+          # Initialize core components
         self.logger = Logger("gui")
-        self.stats = StatsCollector()
-        
-        # Initialize managers
-        self.proxy_manager = ProxyManager(self.config.get('proxy', {}))
-        self.vpn_manager = OpenVPNManager(self.config.get('openvpn', {}))
-        self.tor_controller = TorController(self.config.get('tor', {}))
-        self.network_monitor = NetworkMonitor()
-        self.security_utils = SecurityUtils()
+        self.stats = StatsCollector(self.logger.logger)
+          # Initialize managers
+        self.proxy_manager = ProxyManager(self.logger.logger)
+        self.vpn_manager = OpenVPNManager(self.logger.logger)
+        self.tor_controller = TorController(self.logger.logger)
+        self.network_monitor = NetworkMonitor(self.logger.logger)
+        self.security_utils = SecurityUtils(self.logger.logger)
         
         # GUI state
         self.is_monitoring = False

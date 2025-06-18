@@ -7,6 +7,7 @@ Created by Yashab Alam - Founder & CEO of ZehraSec
 import argparse
 import sys
 import json
+import time
 from typing import Optional, Dict, Any
 from rich.console import Console
 from rich.table import Table

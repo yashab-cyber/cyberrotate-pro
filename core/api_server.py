@@ -28,17 +28,15 @@ class CyberRotateAPI:
         self.config = config
         self.app = Flask(__name__)
         CORS(self.app)
-        
-        # Initialize components
+          # Initialize components
         self.logger = Logger("api_server")
-        self.stats = StatsCollector()
-        
-        # Initialize managers
-        self.proxy_manager = ProxyManager(config.get('proxy', {}))
-        self.vpn_manager = OpenVPNManager(config.get('openvpn', {}))
-        self.tor_controller = TorController(config.get('tor', {}))
-        self.network_monitor = NetworkMonitor()
-        self.security_utils = SecurityUtils()
+        self.stats = StatsCollector(self.logger.logger)
+          # Initialize managers
+        self.proxy_manager = ProxyManager(self.logger.logger)
+        self.vpn_manager = OpenVPNManager(self.logger.logger)
+        self.tor_controller = TorController(self.logger.logger)
+        self.network_monitor = NetworkMonitor(self.logger.logger)
+        self.security_utils = SecurityUtils(self.logger.logger)
         
         # API state
         self.is_running = False
