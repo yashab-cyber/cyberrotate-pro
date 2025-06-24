@@ -601,7 +601,7 @@ class CyberRotateGUI:
                     self.vpn_status = "Failed"
                     self.root.after(0, lambda: self.log_message(f"VPN connection failed: {server_name}", "ERROR"))
                     self.root.after(0, lambda: self.set_status("VPN connection failed"))
-                      except Exception as e:
+            except Exception as e:
                 self.vpn_status = "Error"
                 self.root.after(0, lambda: self.log_message(f"VPN connection error: {e}", "ERROR"))
                 self.root.after(0, lambda: self.set_status("VPN connection error"))
@@ -679,7 +679,7 @@ class CyberRotateGUI:
         
         def new_identity_thread():
             try:
-                result = self.tor_controller.new_identity()
+                result = self.tor_controller.new_circuit()
                 if result:
                     self.root.after(0, lambda: self.log_message("New Tor identity acquired"))
                     self.root.after(0, lambda: self.set_status("New Tor identity acquired"))
@@ -748,7 +748,7 @@ class CyberRotateGUI:
                 
                 # Get new Tor identity if running
                 if self.tor_status == "Running":
-                    self.tor_controller.new_identity()
+                    self.tor_controller.new_circuit()
                     
                 self.root.after(0, lambda: self.log_message("Quick rotation completed"))
                 self.root.after(0, lambda: self.set_status("Quick rotation completed"))

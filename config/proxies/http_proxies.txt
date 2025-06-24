@@ -1,22 +1,7 @@
-# HTTP/HTTPS Proxies
+# HTTP Proxies - Add your own proxies here
 # Format: host:port or username:password@host:port
-# Lines starting with # are comments
+# Example: 192.168.1.100:8080
+# Example: user:pass@proxy.example.com:3128
 
-# Example proxies (replace with real ones)
-# 192.168.1.100:8080
-# proxy1.example.com:3128
-# username:password@proxy2.example.com:8080
-
-# Free proxy lists (add real proxies here):
-# You can find free proxies from various sources
-# Remember to verify they work and are safe to use
-
-# Premium proxy services (configure with your credentials):
-# premium-proxy1.example.com:8080
-# premium-proxy2.example.com:3128
-
-# Notes:
-# - Test proxies before use
-# - Some proxies may be unreliable
-# - Use reputable proxy providers for better performance
-# - Always verify proxy anonymity level
+# SOCKS Proxies
+# socks5://127.0.0.1:1080
