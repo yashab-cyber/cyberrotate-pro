@@ -384,3 +384,21 @@ DataDirectory {self._get_tor_data_directory()}
         except Exception as e:
             self.logger.error(f"Error checking hibernation status: {e}")
             return False
+
+    # GUI wrapper methods for compatibility
+    def start(self) -> bool:
+        """Start Tor service (wrapper for start_tor_service)"""
+        return self.start_tor_service()
+    
+    def stop(self) -> bool:
+        """Stop Tor service (wrapper for stop_tor_service)"""
+        try:
+            self.stop_tor_service()
+            return True
+        except Exception as e:
+            self.logger.error(f"Error stopping Tor: {e}")
+            return False
+    
+    def new_identity(self) -> bool:
+        """Get new Tor identity (wrapper for new_circuit)"""
+        return self.new_circuit()

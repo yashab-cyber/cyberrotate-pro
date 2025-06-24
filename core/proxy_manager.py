@@ -396,3 +396,14 @@ class ProxyManager:
         """Cleanup proxy manager"""
         self.current_proxy = None
         self.logger.info("Proxy manager cleaned up")
+
+    def test_all_proxies(self) -> List[ProxyConfig]:
+        """Test all proxies and return working ones (wrapper for validate_proxies)"""
+        try:
+            self.validate_proxies()
+            working_proxies = self.get_working_proxies()
+            self.logger.info(f"Tested proxies: {len(working_proxies)} working out of {len(self.proxy_list)}")
+            return working_proxies
+        except Exception as e:
+            self.logger.error(f"Error testing proxies: {e}")
+            return []

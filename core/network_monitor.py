@@ -457,3 +457,47 @@ class NetworkMonitor:
         except Exception as e:
             self.logger.error(f"Error exporting network info: {e}")
             return False
+
+    def check_dns_leaks(self) -> Dict[str, Any]:
+        """Check for DNS leaks"""
+        try:
+            dns_servers = self.get_dns_servers()
+            public_ip = self.get_public_ip()
+            
+            # Simple DNS leak check
+            secure = True
+            issues = []
+            
+            # Check if using default DNS servers (potential leak)
+            default_dns = ['8.8.8.8', '8.8.4.4', '1.1.1.1', '1.0.0.1']
+            for dns in dns_servers:
+                if dns in default_dns:
+                    secure = False
+                    issues.append(f"Using default DNS server: {dns}")
+            
+            return {
+                'secure': secure,
+                'dns_servers': dns_servers,
+                'public_ip': public_ip,
+                'issues': issues
+            }
+            
+        except Exception as e:
+            self.logger.error(f"DNS leak check error: {e}")
+            return {'secure': True, 'error': str(e)}
+
+    def get_network_details(self) -> Dict[str, Any]:
+        """Get detailed network information for GUI display"""
+        try:
+            return {
+                'Interfaces': len(self.get_network_interfaces()),
+                'Active Connections': len(self.get_active_connections()),
+                'Default Gateway': self.get_default_gateway(),
+                'DNS Servers': ', '.join(self.get_dns_servers()[:2]),
+                'Public IP': self.get_public_ip(),
+                'Local IP': self.get_local_ip(),
+                'Internet Connected': self.check_internet_connectivity()
+            }
+        except Exception as e:
+            self.logger.error(f"Error getting network details: {e}")
+            return {'Error': str(e)}

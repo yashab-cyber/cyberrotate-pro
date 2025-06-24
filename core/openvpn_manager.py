@@ -527,3 +527,23 @@ verb 3
             stats['connection_time'] = time.time() - self.connection_start_time
         
         return stats
+
+    def connect_by_name(self, server_name: str) -> bool:
+        """Connect to OpenVPN server by name (wrapper for GUI compatibility)"""
+        try:
+            # Find config by name
+            target_config = None
+            for config in self.available_configs:
+                if config.name == server_name:
+                    target_config = config
+                    break
+            
+            if not target_config:
+                self.logger.error(f"Server not found: {server_name}")
+                return False
+            
+            return self.connect(target_config)
+            
+        except Exception as e:
+            self.logger.error(f"Error connecting to {server_name}: {e}")
+            return False

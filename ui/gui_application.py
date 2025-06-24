@@ -368,8 +368,7 @@ class CyberRotateGUI:
             
             # Update network info
             self.update_network_info()
-            
-            # Update statistics
+              # Update statistics
             self.update_statistics()
             
         except Exception as e:
@@ -379,8 +378,17 @@ class CyberRotateGUI:
         """Update IP address and location information"""
         try:
             ip_info = self.network_monitor.get_public_ip()
-            self.current_ip = ip_info.get('ip', 'Unknown')
-            self.current_location = ip_info.get('location', 'Unknown')
+            
+            # Handle both string and dictionary returns
+            if isinstance(ip_info, dict):
+                self.current_ip = ip_info.get('ip', 'Unknown')
+                self.current_location = ip_info.get('location', 'Unknown')
+            elif isinstance(ip_info, str):
+                self.current_ip = ip_info
+                self.current_location = "Unknown"
+            else:
+                self.current_ip = "Unknown"
+                self.current_location = "Unknown"
             
             self.ip_label.config(text=f"IP: {self.current_ip}")
             self.location_label.config(text=f"Location: {self.current_location}")
@@ -401,8 +409,7 @@ class CyberRotateGUI:
             self.vpn_indicator.config(fg="green")
         else:
             self.vpn_indicator.config(fg="red")
-            
-        # Update Tor indicator
+              # Update Tor indicator
         if self.tor_status == "Running":
             self.tor_indicator.config(fg="green")
         else:
@@ -456,13 +463,21 @@ class CyberRotateGUI:
     def update_vpn_servers(self):
         """Update VPN server list"""
         try:
-            servers = self.vpn_manager.get_server_list()
-            server_names = [server.get('name', 'Unknown') for server in servers]
+            # Get available VPN servers
+            servers = self.vpn_manager.get_available_servers()
+            if servers and isinstance(servers, list):
+                server_names = [server.get('name', 'Unknown') for server in servers]
+            else:
+                server_names = ["Default VPN"]
+            
             self.vpn_server_combo['values'] = server_names
             if server_names:
                 self.vpn_server_combo.set(server_names[0])
         except Exception as e:
             self.log_message(f"VPN server update error: {e}")
+            # Set a default option if VPN manager fails
+            self.vpn_server_combo['values'] = ["No VPN servers available"]
+            self.vpn_server_combo.set("No VPN servers available")
             
     def log_message(self, message: str, level: str = "INFO"):
         """Add message to log display"""
@@ -476,8 +491,7 @@ class CyberRotateGUI:
         else:
             # Fallback to print if widget not ready
             print(f"[{timestamp}] {level}: {message}")
-        
-        # Also log to file
+          # Also log to file
         self.logger.info(message)
         
     def set_status(self, message: str):
@@ -485,6 +499,7 @@ class CyberRotateGUI:
         self.status_label.config(text=message)
         
     # Action methods
+    
     def check_ip(self):
         """Check current IP address"""
         self.set_status("Checking IP address...")
@@ -492,8 +507,17 @@ class CyberRotateGUI:
         def check_ip_thread():
             try:
                 ip_info = self.network_monitor.get_public_ip()
-                self.current_ip = ip_info.get('ip', 'Unknown')
-                self.current_location = ip_info.get('location', 'Unknown')
+                
+                # Handle both string and dictionary returns
+                if isinstance(ip_info, dict):
+                    self.current_ip = ip_info.get('ip', 'Unknown')
+                    self.current_location = ip_info.get('location', 'Unknown')
+                elif isinstance(ip_info, str):
+                    self.current_ip = ip_info
+                    self.current_location = "Unknown"
+                else:
+                    self.current_ip = "Unknown"
+                    self.current_location = "Unknown"
                 
                 self.root.after(0, lambda: self.log_message(f"IP: {self.current_ip}, Location: {self.current_location}"))
                 self.root.after(0, lambda: self.set_status("IP check completed"))
@@ -547,8 +571,7 @@ class CyberRotateGUI:
         """Load proxy list from file"""
         filename = filedialog.askopenfilename(
             title="Select Proxy List File",
-            filetypes=[("Text files", "*.txt"), ("All files", "*.*")]
-        )
+            filetypes=[("Text files", "*.txt"), ("All files", "*.*")]        )
         
         if filename:
             try:
@@ -569,7 +592,7 @@ class CyberRotateGUI:
         
         def connect_vpn_thread():
             try:
-                result = self.vpn_manager.connect(server_name)
+                result = self.vpn_manager.connect_by_name(server_name)
                 if result:
                     self.vpn_status = "Connected"
                     self.root.after(0, lambda: self.log_message(f"Connected to VPN: {server_name}"))
@@ -578,8 +601,7 @@ class CyberRotateGUI:
                     self.vpn_status = "Failed"
                     self.root.after(0, lambda: self.log_message(f"VPN connection failed: {server_name}", "ERROR"))
                     self.root.after(0, lambda: self.set_status("VPN connection failed"))
-                    
-            except Exception as e:
+                      except Exception as e:
                 self.vpn_status = "Error"
                 self.root.after(0, lambda: self.log_message(f"VPN connection error: {e}", "ERROR"))
                 self.root.after(0, lambda: self.set_status("VPN connection error"))
@@ -809,20 +831,20 @@ def print_banner():
 ║                          CYBERROTATE PRO GLOBAL NETWORK                      ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
 ║                                                                              ║
-║   203.0.113.5 ──┐              ╭───────────╮              ┌── 8.8.8.8       ║
-║                 │              │     🌍     │              │                 ║
-║   1.1.1.1 ──────┼──────────────│   EARTH   │──────────────┼──── 9.9.9.9     ║
-║                 │              │  NETWORK  │              │                 ║
-║   74.125.224.72 ─┘              ╰───────────╯              └─ 208.67.222.222 ║
+║   203.0.113.5 ──┐              ╭───────────╮              ┌── 8.8.8.8        ║
+║                 │              │     🌍    │              │                 ║
+║   1.1.1.1 ──────┼──────────────│   EARTH   │──────────────┼──── 9.9.9.9      ║
+║                 │              │  NETWORK  │              │                  ║
+║   74.125.224.72─┘              ╰───────────╯               └─ 208.67.222.222 ║
 ║                                                                              ║
 ║   ┌─── LIVE STATUS ──────────────────────────────────────────────────────┐   ║
 ║   │ 🔄 Current: 185.199.108.153 ➤ 104.21.14.101 ➤ 151.101.193.140      │   ║
-║   │ 🌐 Nodes: 847 servers • 195 countries • 99.97% uptime              │   ║
-║   │ 🛡️ Security: Zero logs • Kill switch • DNS leak protection          │   ║
+║   │ 🌐 Nodes: 847 servers • 195 countries • 99.97% uptime                │   ║
+║   │ 🛡️ Security: Zero logs • Kill switch • DNS leak protection           │   ║
 ║   └──────────────────────────────────────────────────────────────────────┘   ║
 ║                                                                              ║
-║                    🔒 Professional IP Rotation Suite 🔒                     ║
-║                         Created by Yashab Alam - ZehraSec                   ║
+║                    🔒 Professional IP Rotation Suite 🔒                      ║
+║                         Created by Yashab Alam - ZehraSec                    ║
 ║                                                                              ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
     """

@@ -1,296 +1,805 @@
-# CyberRotate Pro - Advanced IP Rotation & Anonymity Suite
+# 🛡️ CyberRotate Pro - Professional IP Rotation & Anonymity Suite
 
-![Version](https://img.shields.io/badge/version-1.0.0-green.svg)
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.8%2B-orange.svg)
-![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)
-![Repository](https://img.shields.io/badge/repository-yashab--cyber%2Fcyberrotate--pro-blue.svg)
+<div align="center">
 
-> **🛡️ Developed by Yashab Alam - Founder & CEO of ZehraSec 🛡️**
+![CyberRotate Pro Logo](https://img.shields.io/badge/CyberRotate-Pro-blue?style=for-the-badge&logo=shield&logoColor=white)
 
-A sophisticated IP rotation and anonymity suite designed for authorized security testing, penetration testing, and cybersecurity research created by **Yashab Alam**, the visionary founder of **ZehraSec**. This tool provides enterprise-grade IP obfuscation capabilities with comprehensive monitoring and security features.
+![Version](https://img.shields.io/badge/version-1.0.0-green.svg?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
+![Python](https://img.shields.io/badge/python-3.8%2B-orange.svg?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg?style=flat-square)
+![Stars](https://img.shields.io/github/stars/yashab-cyber/cyberrotate-pro?style=flat-square)
+![Forks](https://img.shields.io/github/forks/yashab-cyber/cyberrotate-pro?style=flat-square)
+![Downloads](https://img.shields.io/github/downloads/yashab-cyber/cyberrotate-pro/total?style=flat-square)
 
-## 👨‍💻 About the Developer
+**🔐 Enterprise-Grade IP Rotation for Cybersecurity Professionals 🔐**
 
-**Yashab Alam** is the founder and CEO of ZehraSec, a cutting-edge cybersecurity company specializing in advanced security solutions and ethical hacking tools. With extensive experience in cybersecurity, network security, and penetration testing, Yashab created CyberRotate Pro to provide security professionals with a powerful, reliable, and ethically-focused IP rotation solution.
+*Developed with ❤️ by [Yashab Alam](https://github.com/yashab-cyber) - Founder & CEO of [ZehraSec](https://www.zehrasec.com)*
 
-### 🌟 Developer Expertise:
-- **🛡️ Cybersecurity Architecture**: Advanced security system design and implementation
-- **🔐 Ethical Hacking**: Professional penetration testing and vulnerability assessment
-- **🌐 Network Security**: Network infrastructure security and anonymity solutions
-- **💻 Software Development**: Full-stack development with security-first approach
-- **🎓 Security Education**: Training and mentoring the next generation of cybersecurity professionals
-- **� Security Research**: Continuous research in privacy-enhancing technologies
+[🚀 Quick Start](#-quick-start) • 
+[📖 Documentation](./docs/) • 
+[🎯 Features](#-features) • 
+[💬 Community](https://github.com/yashab-cyber/cyberrotate-pro/discussions) • 
+[🐛 Issues](https://github.com/yashab-cyber/cyberrotate-pro/issues)
 
-A sophisticated IP rotation and anonymity suite designed for authorized security testing, penetration testing, and cybersecurity research. This tool provides enterprise-grade IP obfuscation capabilities with comprehensive monitoring and security features.
+</div>
 
-## 🏢 About ZehraSec
+---
 
-**ZehraSec** is a pioneering cybersecurity company founded by **Yashab Alam**, dedicated to developing innovative security solutions for the modern digital landscape. The company specializes in creating professional-grade cybersecurity tools, ethical hacking solutions, and security awareness programs.
+## 📋 Table of Contents
 
-### 🎯 ZehraSec Specializations:
-- **🛡️ Advanced Security Tools**: Professional cybersecurity software development
-- **🔐 Ethical Hacking Solutions**: Authorized penetration testing tools and methodologies
-- **🎓 Cybersecurity Training**: Professional development and certification programs
-- **🔬 Security Research**: Cutting-edge research in privacy and anonymity technologies
-- **🌐 Network Security**: Infrastructure protection and monitoring solutions
-- **📋 Compliance & Audit**: Regulatory compliance and security assessment tools
+- [🎯 Overview](#-overview)
+- [✨ Key Features](#-key-features)
+- [🚀 Quick Start](#-quick-start)
+- [📦 Installation](#-installation)
+- [🎮 Usage Examples](#-usage-examples)
+- [⚙️ Configuration](#️-configuration)
+- [📁 Project Structure](#-project-structure)
+- [🔒 Security Features](#-security-features)
+- [⚖️ Legal & Ethical Use](#️-legal--ethical-use)
+- [🤝 Contributing](#-contributing)
+- [📞 Support](#-support)
+- [📄 License](#-license)
 
-### 🌐 Connect with ZehraSec
+---
 
-**Official Website:** [www.zehrasec.com](https://www.zehrasec.com)
+## 🎯 Overview
 
-**Social Media Channels:**
-- 📸 **Instagram:** [@_zehrasec](https://www.instagram.com/_zehrasec?igsh=bXM0cWl1ejdoNHM4)
-- 📘 **Facebook:** [ZehraSec Official Page](https://www.facebook.com/profile.php?id=61575580721849)
-- 💬 **WhatsApp Channel:** [ZehraSec Updates](https://whatsapp.com/channel/0029Vaoa1GfKLaHlL0Kc8k1q)
-- 🐦 **X (Twitter):** [@zehrasec](https://x.com/zehrasec?t=Tp9LOesZw2d2yTZLVo0_GA&s=08)
-- 💼 **LinkedIn:** [ZehraSec Company](https://www.linkedin.com/company/zehrasec)
+**CyberRotate Pro** is a sophisticated IP rotation and anonymity suite designed exclusively for **authorized security testing, penetration testing, and cybersecurity research**. Built by cybersecurity professionals for cybersecurity professionals, this tool provides enterprise-grade IP obfuscation capabilities with comprehensive monitoring and security features.
 
-### 👨‍💻 Connect with Yashab Alam (Founder & CEO)
+### 🎯 **Why Choose CyberRotate Pro?**
 
-**Professional Profiles:**
-- 💻 **GitHub:** [@yashab-cyber](https://github.com/yashab-cyber)
-- 📸 **Instagram:** [@yashab.alam](https://www.instagram.com/yashab.alam)
-- 💼 **LinkedIn:** [Yashab Alam](https://www.linkedin.com/in/yashabalam)
+| Feature | CyberRotate Pro | Traditional Tools |
+|---------|----------------|-------------------|
+| 🔄 **Multi-Protocol Support** | ✅ HTTP/HTTPS/SOCKS4/SOCKS5/Tor/VPN | ❌ Limited protocols |
+| 🛡️ **Leak Protection** | ✅ DNS/WebRTC/IPv6 protection | ❌ Basic or none |
+| � **Real-time Monitoring** | ✅ Advanced analytics & dashboard | ❌ Basic logging |
+| � **Enterprise Security** | ✅ Audit trails & compliance | ❌ Minimal security |
+| 📚 **Professional Docs** | ✅ Comprehensive guides | ❌ Basic documentation |
+| ⚖️ **Ethical Framework** | ✅ Built-in legal guidelines | ❌ No guidance |
+| 🎓 **Educational Value** | ✅ Training materials included | ❌ Tool-only focus |
 
-**For more information about ZehraSec services, professional consultation, or collaboration opportunities, visit our official channels above.**
+### 🏢 **About ZehraSec & Developer**
 
-## 🚀 Features
+**[ZehraSec](https://www.zehrasec.com)** is a pioneering cybersecurity company founded by **[Yashab Alam](https://github.com/yashab-cyber)**, specializing in:
+- 🛡️ **Professional Security Tools** - Enterprise-grade cybersecurity solutions
+- 🎓 **Training & Education** - Cybersecurity certification and skill development
+- 🔬 **Security Research** - Privacy-enhancing technologies and threat intelligence
+- 🤝 **Community Building** - Supporting ethical hacking and security communities
 
-### 🔄 Advanced IP Rotation Engine
-- **Multi-Protocol Support**: HTTP/HTTPS/SOCKS4/SOCKS5 proxy rotation
-- **Tor Network Integration**: Deep web access with automatic circuit renewal
-- **VPN Provider Framework**: Extensible VPN provider integration system
-- **Smart Rotation Logic**: Intelligent interval-based and threshold-based switching
-- **Geolocation Control**: Target-specific geographic IP selection
-- **Load Balancing**: Distribute traffic across multiple endpoints
+**Connect with us:**
+- 🌐 **Website**: [zehrasec.com](https://www.zehrasec.com)
+- � **GitHub**: [@yashab-cyber](https://github.com/yashab-cyber)
+- � **LinkedIn**: [ZehraSec](https://www.linkedin.com/company/zehrasec) | [Yashab Alam](https://www.linkedin.com/in/yashabalam)
+- � **Instagram**: [@_zehrasec](https://www.instagram.com/_zehrasec) | [@yashab.alam](https://www.instagram.com/yashab.alam)
+- � **Twitter**: [@zehrasec](https://x.com/zehrasec)
 
-### 🛡️ Professional Security Suite  
-- **DNS Leak Protection**: Advanced DNS leak detection and prevention
-- **WebRTC Leak Prevention**: Browser fingerprint protection
-- **Connection Fingerprinting**: Detect and mitigate connection patterns
-- **IP Reputation Analysis**: Real-time IP blacklist and reputation checking
-- **User Agent Randomization**: Browser fingerprint obfuscation
-- **Traffic Analysis Protection**: Pattern detection and mitigation
+---
 
-### � Enterprise Monitoring & Analytics
-- **Real-Time Dashboard**: Live IP tracking and rotation status
-- **Comprehensive Statistics**: Success rates, latency metrics, failure analysis
-- **Network Interface Monitoring**: Multi-interface connection tracking
-- **Performance Metrics**: Connection speed, latency, and stability analysis
-- **Audit Logging**: Complete activity logs for compliance and analysis
-- **Historical Analytics**: Trend analysis and performance reporting
+## ✨ Key Features
 
-### 🔧 Advanced Configuration System
-- **Multi-Profile Management**: Different configurations for various scenarios
-- **Schedule-Based Rotation**: Time-based and event-triggered rotations
-- **Fail-Safe Mechanisms**: Automatic fallback and recovery systems
-- **Custom Proxy Lists**: Import and manage custom proxy sources
-- **API Integration**: RESTful API for external tool integration
-- **Command-Line Interface**: Full CLI support for automation
+<div align="center">
 
-## 📋 Prerequisites
+### � **Advanced Rotation Engine**
+Multi-protocol IP rotation with intelligent switching algorithms
 
-### Critical Dependencies
-- **Python 3.8+** (Python 3.9+ recommended for optimal performance)
-- **pip** (Package installer for Python)
-- **OpenSSL** (For secure connections and certificate validation)
+### 🛡️ **Professional Security Suite**
+Comprehensive leak detection and enterprise-grade protection
 
-### Recommended Dependencies
-- **Tor Browser/Service** (For Tor network functionality)
-- **Git** (For updates and version control)
-- **curl/wget** (For network operations)
+### � **Real-time Analytics**
+Live monitoring with detailed performance metrics
 
-### Optional Professional Tools
-- **Wireshark** (Network traffic analysis)
-- **Burp Suite** (Web application security testing)
-- **Nmap** (Network discovery and security auditing)
+### ⚙️ **Flexible Configuration**
+Multiple profiles for different testing scenarios
 
-## 🛠️ Installation
+</div>
 
-### 🚀 Quick Setup (Recommended)
+### � **Core Capabilities**
 
-#### Automated Installation:
-```powershell
-# Windows PowerShell
-git clone https://github.com/your-repo/cyberrotate-pro.git
+#### **🌐 Rotation Methods**
+- **HTTP/HTTPS Proxies** - Standard web proxy rotation
+- **SOCKS4/SOCKS5** - Advanced proxy protocols with authentication
+- **Tor Network** - Deep web access with automatic circuit renewal
+- **VPN Integration** - Support for major VPN providers
+- **Hybrid Mode** - Combine multiple methods for maximum effectiveness
+
+#### **� Security Features**
+- **DNS Leak Protection** - Prevent DNS queries from revealing real location
+- **WebRTC Leak Prevention** - Block WebRTC from exposing local IP addresses
+- **IPv6 Leak Detection** - Handle IPv6 connections and potential leaks
+- **IP Reputation Analysis** - Real-time blacklist and reputation checking
+- **User Agent Randomization** - Browser fingerprint obfuscation
+- **Connection Fingerprinting** - Detect and mitigate connection patterns
+
+#### **📊 Monitoring & Analytics**
+- **Real-Time Dashboard** - Live IP tracking and rotation status
+- **Performance Metrics** - Success rates, latency, stability analysis
+- **Historical Analytics** - Trend analysis and reporting
+- **Audit Logging** - Complete activity logs for compliance
+- **Export Capabilities** - Multiple formats (JSON, CSV, XML)
+- **API Integration** - RESTful API for external tools
+
+---
+
+## � Quick Start
+
+### ⚡ **1-Minute Setup**
+
+```bash
+# Clone the repository
+git clone https://github.com/yashab-cyber/cyberrotate-pro.git
 cd cyberrotate-pro
+
+# Auto-install (Windows)
 .\install.ps1
 
-# Linux/macOS
-git clone https://github.com/your-repo/cyberrotate-pro.git
+# Auto-install (Linux/macOS)
+chmod +x install.sh && ./install.sh
+
+# Start the application
+python ip_rotator.py
+```
+
+### 🎯 **Basic Usage Example**
+
+```python
+from core.ip_rotator import IPRotator
+
+# Initialize with default configuration
+rotator = IPRotator()
+
+# Start rotation with 5-second intervals
+rotator.start_rotation(interval=5, method='proxy')
+
+# Get current IP information
+current_ip = rotator.get_current_ip()
+print(f"Current IP: {current_ip['ip']} ({current_ip['country']})")
+
+# Get rotation statistics
+stats = rotator.get_statistics()
+print(f"Success Rate: {stats['success_rate']}%")
+```
+
+---
+
+## 📦 Installation
+
+### 📋 **System Requirements**
+
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| **Python** | 3.8+ | 3.9+ |
+| **RAM** | 512MB | 2GB+ |
+| **Storage** | 100MB | 500MB+ |
+| **Network** | Stable Internet | High-speed connection |
+| **OS** | Windows 10, Ubuntu 18.04, macOS 10.14 | Latest versions |
+
+### 🔧 **Dependencies**
+
+<details>
+<summary><b>📦 Core Dependencies (Click to expand)</b></summary>
+
+```
+requests>=2.31.0          # HTTP library for web requests
+pysocks>=1.7.1           # SOCKS proxy support
+stem>=1.8.1              # Tor controller library
+colorama>=0.4.6          # Cross-platform colored terminal text
+psutil>=5.9.6            # System and process utilities
+cryptography>=3.4.8     # Cryptographic primitives
+```
+</details>
+
+<details>
+<summary><b>🛡️ Security Dependencies (Click to expand)</b></summary>
+
+```
+pyopenssl>=21.0.0        # Python wrapper around OpenSSL
+certifi>=2021.10.8       # Mozilla's CA certificate bundle
+urllib3>=1.26.7          # HTTP library with security improvements
+```
+</details>
+
+<details>
+<summary><b>🎯 Optional Professional Tools</b></summary>
+
+- **Tor Browser/Service** - For Tor network functionality
+- **Wireshark** - Network traffic analysis
+- **Burp Suite** - Web application security testing
+- **Nmap** - Network discovery and security auditing
+</details>
+
+### 🚀 **Installation Methods**
+
+#### **Method 1: Automated Installation (Recommended)**
+
+<details>
+<summary><b>🪟 Windows PowerShell</b></summary>
+
+```powershell
+# Clone repository
+git clone https://github.com/yashab-cyber/cyberrotate-pro.git
 cd cyberrotate-pro
+
+# Run automated installer
+.\install.ps1
+
+# Verify installation
+python ip_rotator.py --version
+```
+</details>
+
+<details>
+<summary><b>🐧 Linux & macOS</b></summary>
+
+```bash
+# Clone repository
+git clone https://github.com/yashab-cyber/cyberrotate-pro.git
+cd cyberrotate-pro
+
+# Make installer executable and run
 chmod +x install.sh
 ./install.sh
-```
 
-#### Manual Installation:
+# Verify installation
+python3 ip_rotator.py --version
+```
+</details>
+
+#### **Method 2: Manual Installation**
+
+<details>
+<summary><b>📖 Step-by-step Manual Setup</b></summary>
+
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-repo/cyberrotate-pro.git
+git clone https://github.com/yashab-cyber/cyberrotate-pro.git
 cd cyberrotate-pro
 
-# 2. Create virtual environment (recommended)
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-# or
-venv\Scripts\activate     # Windows
+# 2. Create virtual environment (highly recommended)
+python -m venv cyberrotate-env
 
-# 3. Install dependencies
+# 3. Activate virtual environment
+# Windows:
+cyberrotate-env\Scripts\activate
+# Linux/macOS:
+source cyberrotate-env/bin/activate
+
+# 4. Upgrade pip
+python -m pip install --upgrade pip
+
+# 5. Install dependencies
 pip install -r requirements.txt
 
-# 4. Optional: Install Tor
-# Windows: Download from https://www.torproject.org/
-# Linux: sudo apt-get install tor
-# macOS: brew install tor
-
-# 5. Run initial setup
-python setup.py install
-```
-
-### 🔧 Advanced Setup Options
-
-#### Professional Installation:
-```bash
-# Install with all optional dependencies
+# 6. Install optional full features (recommended)
 pip install -r requirements-full.txt
 
-# Install development dependencies
+# 7. Run setup script
+python setup.py install
+
+# 8. Verify installation
+python ip_rotator.py --help
+```
+</details>
+
+#### **Method 3: Developer Installation**
+
+<details>
+<summary><b>👨‍💻 Development Environment Setup</b></summary>
+
+```bash
+# Clone and enter directory
+git clone https://github.com/yashab-cyber/cyberrotate-pro.git
+cd cyberrotate-pro
+
+# Create development environment
+python -m venv dev-env
+source dev-env/bin/activate  # Linux/macOS
+# dev-env\Scripts\activate   # Windows
+
+# Install all dependencies including development tools
 pip install -r requirements-dev.txt
 
-# Install with specific features
-pip install -e .[tor,vpn,monitoring]
+# Install in editable mode for development
+pip install -e .
+
+# Run tests to verify setup
+python -m pytest tests/ -v
+```
+</details>
+
+### 🔧 **Post-Installation Setup**
+
+#### **Optional: Tor Installation**
+
+<details>
+<summary><b>🌐 Tor Network Setup (Click for instructions)</b></summary>
+
+**Windows:**
+```powershell
+# Download Tor Browser Bundle from https://www.torproject.org/
+# Or install via Chocolatey:
+choco install tor
 ```
 
-## 🎯 Usage
-
-### 💻 Interactive Mode (Recommended)
+**Linux (Ubuntu/Debian):**
 ```bash
-# Start the main application
+sudo apt update
+sudo apt install tor
+sudo systemctl start tor
+sudo systemctl enable tor
+```
+
+**macOS:**
+```bash
+# Using Homebrew:
+brew install tor
+brew services start tor
+```
+
+**Verify Tor Installation:**
+```bash
+# Check if Tor is running (should show port 9050)
+netstat -an | grep 9050
+# or
+ss -tuln | grep 9050
+```
+</details>
+
+#### **Configuration Verification**
+
+```bash
+# Test basic functionality
+python ip_rotator.py --test-connection
+
+# Verify all components
+python ip_rotator.py --system-check
+
+# Test with safe configuration
+python ip_rotator.py --config config/profiles/training.json --test-mode
+```
+
+---
+
+## 🎮 Usage Examples
+
+### 🎯 **Interactive Mode (Recommended for Beginners)**
+
+```bash
+# Start the main application with GUI
 python ip_rotator.py
 
-# With custom configuration
-python ip_rotator.py --config custom_config.json
+# Interactive mode with specific profile
+python ip_rotator.py --profile penetration_testing
 
 # Debug mode for troubleshooting
 python ip_rotator.py --debug --verbose
 ```
 
-### ⚡ Command Line Interface
+**Interactive Menu Preview:**
+```
+╔══════════════════════════════════════════════════════════════╗
+║                  CyberRotate Pro v1.0.0                     ║
+║              Professional IP Rotation Suite                  ║
+╠══════════════════════════════════════════════════════════════╣
+║  1. 🚀 Start IP Rotation        2. 📊 View Statistics       ║
+║  3. ⚙️  Configure Settings       4. 🔍 Test Connection       ║
+║  5. 📋 Export Reports           6. ❓ Help & Documentation   ║
+║  0. 🚪 Exit Application                                      ║
+╚══════════════════════════════════════════════════════════════╝
+```
+
+### ⚡ **Command Line Interface (Advanced Users)**
+
+<details>
+<summary><b>🔧 Basic Commands</b></summary>
+
 ```bash
 # Quick start with default settings
 python ip_rotator.py --start
 
-# Advanced usage examples
-python ip_rotator.py --method tor --interval 10 --country US
-python ip_rotator.py --proxy-file custom_proxies.txt --rotate-count 100
-python ip_rotator.py --monitor --stats --export-logs results.json
+# Start with specific method and interval
+python ip_rotator.py --method tor --interval 10
 
-# Professional automation
-python ip_rotator.py --batch --config-dir ./profiles/ --schedule hourly
+# Rotate using proxy list with country filtering
+python ip_rotator.py --proxy-file proxies.txt --country US,UK,CA
+
+# Monitor mode with real-time statistics
+python ip_rotator.py --monitor --stats --real-time
 ```
+</details>
 
-### 🔧 API Integration
+<details>
+<summary><b>🎯 Advanced Examples</b></summary>
+
+```bash
+# Professional penetration testing setup
+python ip_rotator.py \
+  --profile penetration_testing \
+  --method hybrid \
+  --interval 30 \
+  --country US \
+  --exclude-blacklisted \
+  --log-level INFO
+
+# Research mode with comprehensive logging
+python ip_rotator.py \
+  --profile research \
+  --rotation-count 100 \
+  --export-format json \
+  --output-dir ./results/ \
+  --verify-anonymity
+
+# Training mode with safe settings
+python ip_rotator.py \
+  --profile training \
+  --dry-run \
+  --test-mode \
+  --educational-warnings
+```
+</details>
+
+### � **Python API Integration**
+
+<details>
+<summary><b>📖 Basic API Usage</b></summary>
+
 ```python
-# Python API usage
-from ip_rotator import IPRotator
+from core.ip_rotator import IPRotator
+from utils.logger import setup_logger
 
-rotator = IPRotator(config='professional.json')
-rotator.start_rotation(interval=5)
+# Initialize with configuration
+config_path = "config/profiles/penetration_testing.json"
+rotator = IPRotator(config=config_path)
 
-# Current IP information
-current_ip = rotator.get_current_ip()
-print(f"Current IP: {current_ip['ip']} ({current_ip['country']})")
+# Set up logging
+logger = setup_logger("cyberrotate", level="INFO")
 
-# Statistics and monitoring
-stats = rotator.get_statistics()
-print(f"Success Rate: {stats['success_rate']}%")
+# Start rotation with callbacks
+def on_rotation_success(old_ip, new_ip):
+    logger.info(f"Rotated from {old_ip} to {new_ip}")
+
+def on_rotation_failure(error):
+    logger.error(f"Rotation failed: {error}")
+
+rotator.start_rotation(
+    interval=5,
+    on_success=on_rotation_success,
+    on_failure=on_rotation_failure
+)
+
+# Get current status
+status = rotator.get_status()
+print(f"Current IP: {status['current_ip']}")
+print(f"Location: {status['location']}")
+print(f"Success Rate: {status['success_rate']}%")
 ```
+</details>
+
+<details>
+<summary><b>🔧 Advanced API Features</b></summary>
+
+```python
+import asyncio
+from core.ip_rotator import IPRotator
+from utils.analytics import PerformanceAnalyzer
+
+class SecurityTestSuite:
+    def __init__(self):
+        self.rotator = IPRotator()
+        self.analyzer = PerformanceAnalyzer()
+        
+    async def run_security_tests(self):
+        # Start rotation
+        await self.rotator.start_async_rotation(interval=10)
+        
+        # Perform tests with rotating IPs
+        for test_case in self.get_test_cases():
+            # Get current IP info
+            ip_info = self.rotator.get_current_ip()
+            
+            # Run test
+            result = await self.run_test(test_case, ip_info)
+            
+            # Analyze performance
+            self.analyzer.record_result(result)
+            
+            # Trigger rotation if needed
+            if result.requires_rotation:
+                await self.rotator.force_rotation()
+        
+        # Generate report
+        report = self.analyzer.generate_report()
+        self.save_report(report)
+        
+    def get_test_cases(self):
+        return [
+            {"name": "DNS Leak Test", "type": "anonymity"},
+            {"name": "WebRTC Test", "type": "fingerprint"},
+            {"name": "IP Reputation", "type": "reputation"}
+        ]
+
+# Usage
+async def main():
+    suite = SecurityTestSuite()
+    await suite.run_security_tests()
+
+# Run
+asyncio.run(main())
+```
+</details>
+
+### 🔄 **Rotation Strategies**
+
+<details>
+<summary><b>⏰ Time-based Rotation</b></summary>
+
+```bash
+# Fixed interval rotation
+python ip_rotator.py --interval 30  # Every 30 seconds
+
+# Random interval rotation
+python ip_rotator.py --random-interval 10-60  # Random 10-60 seconds
+
+# Schedule-based rotation
+python ip_rotator.py --schedule "*/5 * * * *"  # Every 5 minutes (cron syntax)
+```
+</details>
+
+<details>
+<summary><b>🎯 Event-based Rotation</b></summary>
+
+```bash
+# Rotate on request count
+python ip_rotator.py --rotate-on-count 50
+
+# Rotate on failure threshold
+python ip_rotator.py --rotate-on-failures 3
+
+# Rotate on detection events
+python ip_rotator.py --rotate-on-detection
+```
+</details>
+
+---
 
 ## ⚙️ Configuration
 
-### 📁 Configuration Files
+### 📁 **Configuration System**
 
-#### Main Configuration (`config.json`):
+CyberRotate Pro uses a flexible JSON-based configuration system with multiple profiles for different use cases.
+
+#### **🗂️ Configuration Structure**
+
+```
+config/
+├── config.json                    # Main configuration file
+├── profiles/                      # Professional usage profiles
+│   ├── penetration_testing.json   # For authorized pen testing
+│   ├── research.json              # For security research
+│   ├── bug_bounty.json            # For bug bounty programs
+│   ├── training.json              # For educational purposes
+│   └── stealth.json               # For maximum anonymity
+└── proxies/                       # Proxy configuration files
+    ├── http_proxies.txt
+    ├── socks_proxies.txt
+    └── custom_proxies.txt
+```
+
+#### **🔧 Main Configuration (config.json)**
+
+<details>
+<summary><b>📖 Complete Configuration Example</b></summary>
+
 ```json
 {
     "rotation_settings": {
         "methods": ["proxy", "tor", "vpn"],
+        "default_method": "proxy",
         "interval": 5,
+        "random_interval": false,
+        "interval_range": [3, 10],
         "max_retries": 3,
         "timeout": 10,
-        "fail_threshold": 5
+        "fail_threshold": 5,
+        "rotation_count": 0,
+        "geographic_targeting": {
+            "enabled": false,
+            "target_countries": ["US", "UK", "CA", "DE"],
+            "exclude_countries": ["CN", "RU", "IR"]
+        }
     },
     "security_settings": {
         "dns_leak_protection": true,
         "webrtc_protection": true,
+        "ipv6_protection": true,
         "user_agent_rotation": true,
-        "ip_reputation_check": true
+        "header_randomization": true,
+        "ip_reputation_check": true,
+        "reputation_threshold": 7,
+        "blacklist_check": true,
+        "connection_fingerprinting": true
     },
     "monitoring": {
         "logging_enabled": true,
+        "log_level": "INFO",
         "stats_collection": true,
+        "performance_monitoring": true,
+        "real_time_dashboard": true,
         "export_format": "json",
-        "real_time_dashboard": true
+        "auto_export": false,
+        "export_interval": 3600,
+        "alert_system": {
+            "enabled": true,
+            "failure_threshold": 5,
+            "email_notifications": false,
+            "webhook_url": null
+        }
+    },
+    "proxy_settings": {
+        "proxy_sources": [
+            "config/proxies/http_proxies.txt",
+            "config/proxies/socks_proxies.txt"
+        ],
+        "proxy_validation": true,
+        "validation_timeout": 5,
+        "auto_refresh": true,
+        "refresh_interval": 3600,
+        "connection_pooling": true,
+        "pool_size": 10
+    },
+    "tor_settings": {
+        "enabled": true,
+        "control_port": 9051,
+        "socks_port": 9050,
+        "circuit_renewal": 600,
+        "exit_node_country": null,
+        "bridge_mode": false,
+        "custom_bridges": []
+    },
+    "vpn_settings": {
+        "enabled": false,
+        "providers": [],
+        "auto_connect": false,
+        "kill_switch": true,
+        "dns_servers": ["1.1.1.1", "8.8.8.8"]
     },
     "advanced": {
-        "geolocation_targeting": false,
         "load_balancing": true,
-        "circuit_renewal": 600,
-        "proxy_validation": true
+        "connection_keep_alive": true,
+        "bandwidth_limit": 0,
+        "concurrent_connections": 5,
+        "rate_limiting": {
+            "enabled": false,
+            "requests_per_minute": 60
+        },
+        "custom_headers": {},
+        "ssl_verification": true,
+        "session_persistence": false
     }
 }
 ```
+</details>
 
-#### Professional Profiles:
+#### **🎯 Professional Profiles**
+
+<details>
+<summary><b>🔒 Penetration Testing Profile</b></summary>
+
+```json
+{
+    "profile_name": "Penetration Testing",
+    "description": "Optimized for authorized security assessments",
+    "rotation_settings": {
+        "methods": ["proxy", "tor"],
+        "interval": 30,
+        "max_retries": 5,
+        "fail_threshold": 3
+    },
+    "security_settings": {
+        "dns_leak_protection": true,
+        "webrtc_protection": true,
+        "ip_reputation_check": true,
+        "reputation_threshold": 8
+    },
+    "monitoring": {
+        "logging_enabled": true,
+        "log_level": "DEBUG",
+        "real_time_dashboard": true,
+        "auto_export": true,
+        "export_format": "json"
+    },
+    "compliance": {
+        "authorization_required": true,
+        "activity_logging": "comprehensive",
+        "data_retention": "90_days"
+    }
+}
+```
+</details>
+
+<details>
+<summary><b>🎓 Training Profile</b></summary>
+
+```json
+{
+    "profile_name": "Educational Training",
+    "description": "Safe settings for cybersecurity education",
+    "rotation_settings": {
+        "methods": ["proxy"],
+        "interval": 60,
+        "max_retries": 2,
+        "rotation_count": 10
+    },
+    "security_settings": {
+        "dns_leak_protection": true,
+        "webrtc_protection": true,
+        "ip_reputation_check": true
+    },
+    "safety_features": {
+        "educational_warnings": true,
+        "safe_mode": true,
+        "restricted_operations": true,
+        "demonstration_only": true
+    },
+    "monitoring": {
+        "logging_enabled": true,
+        "detailed_explanations": true
+    }
+}
+```
+</details>
+
+### 🎛️ **Interactive Configuration**
+
+The tool provides multiple ways to configure settings:
+
+#### **GUI Configuration Manager**
 ```bash
-# Create different profiles for various scenarios
-profiles/
-├── penetration_testing.json    # For authorized pen testing
-├── research.json              # For security research
-├── bug_bounty.json           # For bug bounty programs
-├── training.json             # For educational purposes
-└── stealth.json              # For maximum anonymity
+# Open interactive configuration editor
+python ip_rotator.py --configure
+
+# Edit specific profile
+python ip_rotator.py --edit-profile penetration_testing
+
+# Create new profile
+python ip_rotator.py --create-profile custom_profile
 ```
 
-### 🎛️ Interactive Menu System
+#### **Command Line Configuration**
+```bash
+# Set specific options
+python ip_rotator.py --set rotation.interval=30
+python ip_rotator.py --set security.dns_leak_protection=true
 
-#### Main Dashboard:
-```
-╔══════════════════════════════════════════════════════════════════╗
-║                    CyberRotate Pro v1.0.0                       ║
-║                Professional IP Rotation Suite                    ║
-╠══════════════════════════════════════════════════════════════════╣
-║  1. 🚀 Start Advanced IP Rotation                               ║
-║  2. ⏹️  Stop Rotation Process                                    ║
-║  3. 🔄 Execute Single Rotation                                   ║
-║  4. 📊 Real-Time Statistics Dashboard                           ║
-║  5. 🌐 Network Configuration Analysis                           ║
-║  6. ⚙️  Advanced Settings Manager                               ║
-║  7. 🔍 IP Reputation & Security Check                           ║
-║  8. 📈 Performance Analytics                                    ║
-║  9. 🛡️  Security Audit & Leak Detection                        ║
-║ 10. 📋 Export Reports & Logs                                    ║
-║ 11. 🎯 Profile Management                                       ║
-║ 12. ❓ Help & Documentation                                      ║
-║  0. 🚪 Exit Application                                         ║
-╚══════════════════════════════════════════════════════════════════╝
+# View current configuration
+python ip_rotator.py --show-config
+
+# Validate configuration
+python ip_rotator.py --validate-config
 ```
 
-#### Advanced Options Menu:
-- **Rotation Methods**: Proxy, Tor, VPN, Hybrid modes
-- **Timing Controls**: Fixed interval, random interval, event-based
-- **Geographic Targeting**: Country-specific IP selection
-- **Security Levels**: Standard, Enhanced, Maximum anonymity
-- **Monitoring Options**: Real-time, logging, alerting
-- **Integration Settings**: API, webhooks, external tools
+### 🔍 **Configuration Validation**
+
+```bash
+# Comprehensive configuration check
+python ip_rotator.py --config-check --verbose
+
+# Test configuration with dry run
+python ip_rotator.py --config test_config.json --dry-run
+
+# Export configuration for review
+python ip_rotator.py --export-config --format yaml
+```
+
+---
 
 ## 📁 Project Structure
 
+### 🏗️ **Architecture Overview**
+
 ```
 cyberrotate-pro/
-├── 📁 core/                          # Core application modules
+├── 📁 core/                          # 🧠 Core application modules
 │   ├── ip_rotator.py                 # Main rotation engine
 │   ├── proxy_manager.py              # Proxy handling & validation
 │   ├── tor_controller.py             # Tor network integration
@@ -298,341 +807,314 @@ cyberrotate-pro/
 │   ├── security_utils.py             # Security & anonymity utilities
 │   ├── network_monitor.py            # Network interface monitoring
 │   └── api_server.py                 # RESTful API server
-├── 📁 config/                        # Configuration management
+│
+├── 📁 config/                        # ⚙️ Configuration management
 │   ├── config.json                   # Main configuration file
 │   ├── profiles/                     # Professional usage profiles
-│   │   ├── penetration_testing.json
-│   │   ├── research.json
-│   │   ├── bug_bounty.json
-│   │   └── training.json
+│   │   ├── penetration_testing.json  # Authorized pen testing
+│   │   ├── research.json             # Security research
+│   │   ├── bug_bounty.json           # Bug bounty programs
+│   │   ├── training.json             # Educational purposes
+│   │   └── stealth.json              # Maximum anonymity
 │   └── proxies/                      # Proxy configuration files
-│       ├── http_proxies.txt
-│       ├── socks_proxies.txt
-│       └── custom_proxies.txt
-├── 📁 utils/                         # Utility modules
+│       ├── http_proxies.txt          # HTTP/HTTPS proxy lists
+│       ├── socks_proxies.txt         # SOCKS proxy lists
+│       └── custom_proxies.txt        # User-defined proxies
+│
+├── 📁 ui/                           # 🖥️ User interface components
+│   ├── cli_interface.py              # Command-line interface
+│   ├── interactive_menu.py           # Interactive menu system
+│   ├── dashboard.py                  # Real-time dashboard
+│   └── web_interface.py              # Web-based GUI (optional)
+│
+├── 📁 utils/                         # 🔧 Utility modules
 │   ├── logger.py                     # Advanced logging system
 │   ├── stats_collector.py            # Statistics and analytics
 │   ├── leak_detector.py              # DNS/WebRTC leak detection
 │   ├── ip_validator.py               # IP reputation and validation
-│   └── encryption.py                 # Data encryption utilities
-├── 📁 ui/                           # User interface components
-│   ├── cli_interface.py              # Command-line interface
-│   ├── interactive_menu.py           # Interactive menu system
-│   └── dashboard.py                  # Real-time dashboard
-├── 📁 data/                         # Data storage
-│   ├── logs/                         # Application logs
-│   ├── stats/                        # Statistics database
-│   └── cache/                        # Cached data
-├── 📁 docs/                         # Documentation
+│   ├── encryption.py                 # Data encryption utilities
+│   └── performance.py                # Performance monitoring
+│
+├── 📁 tests/                        # 🧪 Comprehensive test suite
+│   ├── unit_tests/                   # Unit testing modules
+│   ├── integration_tests/            # Integration testing
+│   ├── security_tests/               # Security validation tests
+│   └── performance_tests/            # Performance benchmarks
+│
+├── 📁 docs/                         # 📚 Documentation
 │   ├── INSTALL.md                    # Installation guide
 │   ├── USAGE.md                      # Usage documentation
 │   ├── API.md                        # API documentation
 │   ├── TROUBLESHOOTING.md            # Troubleshooting guide
 │   └── CONTRIBUTING.md               # Contribution guidelines
-├── 📁 scripts/                      # Automation scripts
+│
+├── 📁 manual/                       # 📖 Professional manual
+│   ├── README.md                     # Manual overview
+│   ├── 01-installation.md            # Installation guide
+│   ├── 02-quick-start.md             # Quick start guide
+│   ├── 03-configuration.md           # Configuration reference
+│   ├── 04-gui-guide.md               # GUI user guide
+│   ├── 05-cli-guide.md               # CLI reference
+│   ├── 06-api-reference.md           # API documentation
+│   ├── 07-vpn-setup.md               # VPN configuration
+│   ├── 08-proxy-management.md        # Proxy management
+│   ├── 09-tor-integration.md         # Tor network guide
+│   ├── 10-security.md                # Security features
+│   ├── 11-performance.md             # Performance tuning
+│   ├── 12-analytics.md               # Analytics and monitoring
+│   ├── 13-automation.md              # Automation scripts
+│   ├── 14-troubleshooting.md         # Troubleshooting
+│   ├── 15-debugging.md               # Debug procedures
+│   ├── 16-faq.md                     # Frequently asked questions
+│   ├── 17-support.md                 # Support channels
+│   ├── 18-developer.md               # Developer resources
+│   ├── 19-api-examples.md            # API usage examples
+│   └── 20-enterprise.md              # Enterprise features
+│
+├── 📁 scripts/                      # 🚀 Automation scripts
 │   ├── install.sh                    # Linux/macOS installer
 │   ├── install.ps1                   # Windows PowerShell installer
+│   ├── start_gui.sh                  # GUI launcher (Linux/macOS)
+│   ├── start_gui.bat                 # GUI launcher (Windows)
 │   ├── test_suite.py                 # Automated testing
-│   └── benchmark.py                  # Performance benchmarking
-├── 📁 tests/                        # Test suite
-│   ├── unit_tests/
-│   ├── integration_tests/
-│   └── security_tests/
+│   ├── benchmark.py                  # Performance benchmarking
+│   └── update_proxies.py             # Proxy list updater
+│
+├── 📁 data/                         # 📊 Data storage (created at runtime)
+│   ├── logs/                         # Application logs
+│   ├── stats/                        # Statistics database
+│   ├── cache/                        # Cached data
+│   └── exports/                      # Exported reports
+│
+├── 📄 Core Files                     # 🗂️ Essential project files
 ├── requirements.txt                  # Core dependencies
 ├── requirements-full.txt             # Full feature dependencies
 ├── requirements-dev.txt              # Development dependencies
+├── requirements-minimal.txt          # Minimal installation
+├── requirements-py313.txt            # Python 3.13 compatibility
 ├── setup.py                         # Installation setup
+├── _version.py                       # Version information
+├── ip_rotator.py                     # Main application entry point
+├── gui_launcher.py                   # GUI application launcher
+├── verify_release.py                 # Release verification script
+│
+├── 📋 Documentation Files            # 📚 Project documentation
+├── README.md                        # This comprehensive guide
+├── DEVELOPER_MESSAGE.md             # Developer message
+├── RELEASE_CHECKLIST.md             # Release preparation checklist
 ├── LICENSE                          # MIT License
 ├── CHANGELOG.md                     # Version history
-└── README.md                        # This comprehensive guide
+├── CONTRIBUTING.md                  # Contribution guidelines
+├── SECURITY.md                      # Security policy
+├── AUTHORS.md                       # Contributors and credits
+├── DONATE.md                        # Support and donations
+├── PROJECT_STATUS.md                # Current project status
+│
+├── 🔧 Configuration Files            # ⚙️ Environment setup
+├── .gitignore                       # Git ignore patterns
+├── .github/                         # GitHub-specific files
+├── cyberrotate-pro.desktop          # Linux desktop entry
+└── asciiart.txt                     # ASCII art banner
 
-🎯 TOTAL: 35+ files across 8 organized directories for enterprise-grade functionality!
+🎯 **Total: 60+ files across 10+ organized directories for enterprise-grade functionality!**
 ```
 
-## 🔒 Professional Security Features
+### 📊 **Component Overview**
 
-### 🛡️ Multi-Layer Anonymity Protection
+| Component | Purpose | Key Features |
+|-----------|---------|--------------|
+| **🧠 Core** | Main application logic | Rotation engine, network management, security |
+| **⚙️ Config** | Configuration management | Profiles, settings, proxy lists |
+| **🖥️ UI** | User interfaces | CLI, interactive menus, dashboard |
+| **🔧 Utils** | Utility functions | Logging, analytics, leak detection |
+| **🧪 Tests** | Quality assurance | Unit, integration, security tests |
+| **📚 Docs** | Documentation | Guides, API docs, troubleshooting |
+| **� Manual** | Professional manual | 20 comprehensive sections |
+| **🚀 Scripts** | Automation tools | Installers, launchers, utilities |
 
-#### Advanced IP Obfuscation
-- **Smart Proxy Chaining**: Multi-hop proxy connections for enhanced anonymity
-- **Tor Circuit Management**: Automatic circuit renewal and path diversification
-- **VPN Integration**: Seamless integration with major VPN providers
-- **Hybrid Rotation**: Combine multiple methods for maximum effectiveness
-- **Geographic Distribution**: Target specific countries or avoid certain regions
-- **ISP Diversification**: Rotate across different Internet Service Providers
+---
 
-#### Comprehensive Leak Prevention
-- **DNS Leak Protection**: Ensure DNS queries don't reveal real location
-- **WebRTC Leak Detection**: Prevent WebRTC from exposing local IP addresses
-- **IPv6 Leak Prevention**: Handle IPv6 connections and potential leaks
-- **Time Zone Obfuscation**: Randomize time zone information
-- **Browser Fingerprint Protection**: Randomize user agents and headers
-- **Connection Pattern Masking**: Vary connection timing and behavior
+## 🔒 Security Features
 
-#### Real-Time Security Monitoring
-- **Continuous IP Validation**: Verify anonymity status every rotation
-- **Reputation Analysis**: Check IP addresses against threat databases
-- **Blacklist Detection**: Identify and avoid blacklisted IP addresses
-- **Connection Quality Assessment**: Monitor connection speed and stability
-- **Anomaly Detection**: Identify unusual patterns or potential exposure
-- **Security Alert System**: Immediate notifications for security issues
+### 🛡️ **Multi-Layer Anonymity Protection**
 
-### 🔐 Enterprise Security Controls
+<div align="center">
 
-#### Access Control & Authentication
-- **Role-Based Access Control**: Different permission levels for users
-- **API Key Management**: Secure API access with rotation capabilities
-- **Session Management**: Secure session handling with timeout controls
-- **Audit Trail**: Complete logging of all security-relevant events
-- **Configuration Protection**: Encrypted storage of sensitive settings
-- **Backup & Recovery**: Secure backup of configurations and data
+| Security Layer | Protection Type | Implementation |
+|----------------|-----------------|----------------|
+| **🌐 Network** | IP Obfuscation | Multi-protocol rotation, geographic diversity |
+| **🔒 DNS** | Leak Prevention | Custom DNS servers, query monitoring |
+| **🖥️ Browser** | Fingerprinting | User agent rotation, header randomization |
+| **📡 WebRTC** | Local IP Exposure | WebRTC blocking, STUN server control |
+| **🛠️ System** | OS Fingerprinting | Connection pattern masking |
+| **📊 Traffic** | Analysis Protection | Timing randomization, behavior variation |
 
-#### Compliance & Reporting
-- **Activity Logging**: Detailed logs for compliance and forensic analysis
-- **Security Reports**: Automated security assessment reports
-- **Performance Metrics**: Connection success rates and performance data
-- **Incident Tracking**: Log and track security incidents and responses
-- **Export Capabilities**: Multiple formats for data export and analysis
-- **Integration APIs**: Connect with SIEM and security management tools
+</div>
 
-### ⚠️ Security Limitations & Considerations
+#### **🔐 Core Security Components**
 
-#### What This Tool Provides:
-- ✅ **IP Address Rotation** - Changes apparent public IP regularly
-- ✅ **Proxy Management** - Handles multiple proxy types and sources
-- ✅ **Tor Integration** - Deep web access with circuit management
-- ✅ **Leak Detection** - Identifies common anonymity leaks
-- ✅ **Performance Monitoring** - Tracks connection quality and speed
-- ✅ **Professional Logging** - Comprehensive audit trails
+<details>
+<summary><b>🌐 Advanced IP Obfuscation</b></summary>
 
-#### What This Tool Does NOT Guarantee:
-- ❌ **Complete Anonymity** - No tool provides 100% anonymity
-- ❌ **Advanced Persistent Threats** - Nation-state level attack protection
-- ❌ **All Fingerprinting** - Some advanced fingerprinting may still work
-- ❌ **Legal Protection** - Users must comply with laws and regulations
-- ❌ **Endpoint Security** - Does not secure the destination systems
-- ❌ **Physical Security** - Cannot protect against physical surveillance
+- **Smart Proxy Chaining**: Multi-hop proxy connections
+- **Tor Circuit Management**: Automatic renewal and path diversification
+- **VPN Integration**: Seamless provider switching
+- **Geographic Distribution**: Target-specific country selection
+- **ISP Diversification**: Rotate across different providers
+- **Load Balancing**: Distribute traffic intelligently
+</details>
 
-### 🔧 Professional Security Best Practices
+<details>
+<summary><b>🔒 Comprehensive Leak Prevention</b></summary>
 
-#### Essential Security Measures:
-1. **🔐 Multi-Factor Authentication** - Always use strong authentication
-2. **🛡️ Defense in Depth** - Layer multiple security measures
-3. **📊 Regular Auditing** - Monitor and review all activities
-4. **🔄 Continuous Updates** - Keep all components updated
-5. **📋 Documentation** - Maintain detailed security documentation
-6. **🎓 Training** - Ensure proper security awareness and training
+- **DNS Leak Protection**: Prevent DNS queries from revealing location
+- **WebRTC Leak Detection**: Block WebRTC local IP exposure
+- **IPv6 Leak Prevention**: Handle IPv6 connections properly
+- **Time Zone Obfuscation**: Randomize timezone information
+- **Browser Fingerprint Protection**: Randomize headers and user agents
+- **Connection Pattern Masking**: Vary timing and behavior
+</details>
 
-#### Operational Security (OPSEC):
-1. **Authorized Use Only** - Obtain proper authorization before testing
-2. **Controlled Environments** - Use isolated testing environments
-3. **Minimal Data Collection** - Collect only necessary information
-4. **Secure Communications** - Use encrypted channels for sensitive data
-5. **Regular Security Reviews** - Periodic assessment of security posture
-6. **Incident Response** - Have clear procedures for security incidents
+<details>
+<summary><b>📊 Real-time Security Monitoring</b></summary>
 
-## 🐛 Troubleshooting & Support
+- **Continuous IP Validation**: Verify anonymity every rotation
+- **Reputation Analysis**: Check IPs against threat databases
+- **Blacklist Detection**: Avoid known malicious IP addresses
+- **Connection Quality Assessment**: Monitor speed and stability
+- **Anomaly Detection**: Identify unusual patterns
+- **Security Alert System**: Immediate notifications for issues
+</details>
 
-### 🔧 Common Issues & Professional Solutions
+### 🏢 **Enterprise Security Controls**
 
-#### **Connection & Network Issues**
+#### **🔐 Access Control & Authentication**
+- **Role-Based Access Control** - Different permission levels
+- **API Key Management** - Secure API access with rotation
+- **Session Management** - Secure sessions with timeout controls
+- **Audit Trail** - Complete logging of security events
+- **Configuration Protection** - Encrypted sensitive settings
+- **Backup & Recovery** - Secure configuration backup
 
-**"No working proxies found"**
+#### **📋 Compliance & Reporting**
+- **Activity Logging** - Detailed compliance logs
+- **Security Reports** - Automated assessment reports
+- **Performance Metrics** - Success rates and performance data
+- **Incident Tracking** - Security incident management
+- **Export Capabilities** - Multiple export formats
+- **SIEM Integration** - Connect with security management tools
+
+### ⚠️ **Security Limitations & Important Notes**
+
+<div align="center">
+
+#### **✅ What CyberRotate Pro Provides**
+
+| Feature | Description |
+|---------|-------------|
+| 🔄 **IP Rotation** | Regular public IP address changes |
+| 🔒 **Proxy Management** | Multiple proxy types and sources |
+| 🌐 **Tor Integration** | Deep web access with circuit management |
+| 🔍 **Leak Detection** | Common anonymity leak identification |
+| 📊 **Performance Monitoring** | Connection quality tracking |
+| 📋 **Professional Logging** | Comprehensive audit trails |
+
+#### **❌ What This Tool Does NOT Guarantee**
+
+| Limitation | Explanation |
+|------------|-------------|
+| 🚫 **Complete Anonymity** | No tool provides 100% anonymity |
+| 🎯 **Advanced Threats** | Nation-state level attack protection |
+| 🕵️ **All Fingerprinting** | Some advanced fingerprinting may persist |
+| ⚖️ **Legal Protection** | Users must comply with laws |
+| 🛡️ **Endpoint Security** | Destination system security not included |
+| � **Physical Security** | Cannot protect against physical surveillance |
+
+</div>
+
+---
+
+## ⚖️ Legal & Ethical Use
+
+### 🔧 **Troubleshooting**
+
+For comprehensive troubleshooting guides, please refer to:
+
+- 📖 **Troubleshooting Guide**: [manual/14-troubleshooting.md](./manual/14-troubleshooting.md)
+- 🐛 **Debug Procedures**: [manual/15-debugging.md](./manual/15-debugging.md)
+- ❓ **FAQ**: [manual/16-faq.md](./manual/16-faq.md)
+- 🆘 **Support**: [manual/17-support.md](./manual/17-support.md)
+
+#### **Quick Solutions**
+
+<details>
+<summary><b>🚨 Common Issues</b></summary>
+
+**Connection Problems:**
 ```bash
-# Diagnostic steps
-python ip_rotator.py --test-proxies --verbose
-python ip_rotator.py --refresh-proxy-list --source all
+# Test basic connectivity
+python ip_rotator.py --test-connection
 
-# Solution approaches
-1. Check internet connectivity: ping google.com
-2. Verify firewall settings (allow outbound connections)
-3. Test with different proxy sources
-4. Enable debug mode: --debug --log-level DEBUG
+# Check system requirements
+python ip_rotator.py --system-check
+
+# Enable debug mode
+python ip_rotator.py --debug --verbose
 ```
 
-**"Tor connection failed"**
+**Installation Issues:**
 ```bash
-# Comprehensive Tor troubleshooting
-# Check Tor installation
-tor --version
-netstat -an | grep 9050    # Check if Tor is running
-
-# Manual Tor setup
-# Windows: Download and install Tor Browser Bundle
-# Linux: sudo systemctl start tor && sudo systemctl enable tor
-# macOS: brew services start tor
-
-# Advanced Tor configuration
-python ip_rotator.py --tor-debug --control-port 9051
-```
-
-**"Rotation seems slow or fails frequently"**
-```bash
-# Performance optimization
-python ip_rotator.py --optimize --benchmark-connections
-python ip_rotator.py --config fast-rotation.json --parallel-tests 10
-
-# Solutions:
-1. Reduce rotation interval (minimum recommended: 3 seconds)
-2. Use premium proxy sources
-3. Enable connection pooling and keep-alive
-4. Implement connection pre-testing
-```
-
-#### **Security & Anonymity Issues**
-
-**"DNS leaks detected"**
-```bash
-# DNS leak testing and resolution
-python ip_rotator.py --test-dns-leaks --fix-automatically
-
-# Manual DNS configuration
-# Windows: netsh interface ip set dns "Wi-Fi" static 1.1.1.1
-# Linux: echo "nameserver 1.1.1.1" | sudo tee /etc/resolv.conf
-# macOS: networksetup -setdnsservers Wi-Fi 1.1.1.1 9.9.9.9
-```
-
-**"WebRTC leaks exposing real IP"**
-```bash
-# WebRTC protection verification
-python ip_rotator.py --test-webrtc --browser-check
-
-# Browser-specific solutions:
-# Chrome: --disable-webrtc-multiple-routes --disable-webrtc-hw-decoding
-# Firefox: media.peerconnection.enabled = false
-# Edge: Similar to Chrome flags
-```
-
-**"IP reputation issues (blacklisted IPs)"**
-```bash
-# IP reputation checking and filtering
-python ip_rotator.py --check-reputation --blacklist-filter
-python ip_rotator.py --whitelist-countries US,UK,CA --reputation-threshold 7
-
-# Custom reputation sources
-python ip_rotator.py --reputation-api custom --api-key YOUR_KEY
-```
-
-#### **Configuration & Setup Issues**
-
-**"Module import errors"**
-```bash
-# Dependency verification and installation
+# Verify dependencies
 pip install --upgrade -r requirements.txt
-python -c "import requests, stem, colorama; print('All modules available')"
 
-# Virtual environment setup (recommended)
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
+# Reinstall in clean environment
+python -m venv fresh-env
+source fresh-env/bin/activate  # Linux/macOS
 pip install -r requirements-full.txt
 ```
 
-**"Configuration file errors"**
+**Configuration Problems:**
 ```bash
-# Configuration validation and repair
-python ip_rotator.py --validate-config --repair-config
+# Validate configuration
+python ip_rotator.py --validate-config
+
+# Reset to defaults
 python ip_rotator.py --reset-config --backup-current
-
-# Manual configuration check
-python -m json.tool config.json  # Validate JSON syntax
-python ip_rotator.py --config-help --show-examples
 ```
+</details>
 
-### 📊 Advanced Diagnostics
+For detailed solutions, error codes, and advanced troubleshooting, see the [complete troubleshooting guide](./manual/14-troubleshooting.md).
 
-#### **System Performance Analysis**
-```bash
-# Comprehensive system diagnostics
-python ip_rotator.py --system-check --network-analysis
-python ip_rotator.py --benchmark --performance-report
+---
 
-# Memory and CPU monitoring
-python ip_rotator.py --monitor-resources --alert-threshold 80%
-python ip_rotator.py --profile-performance --optimization-suggestions
-```
+## 📚 Documentation
 
-#### **Network Debugging**
-```bash
-# Advanced network diagnostics
-python ip_rotator.py --network-trace --connection-analysis
-python ip_rotator.py --port-scan --security-check
+### 📖 **Complete Manual**
 
-# Traffic analysis (requires elevated privileges)
-python ip_rotator.py --packet-capture --analyze-traffic
-```
+The [manual/](./manual/) directory contains 20 comprehensive sections:
 
-### 🔍 Debug Mode & Logging
+| Section | Topic | Description |
+|---------|-------|-------------|
+| [01](./manual/01-installation.md) | Installation | Detailed setup instructions |
+| [02](./manual/02-quick-start.md) | Quick Start | Get running in minutes |
+| [03](./manual/03-configuration.md) | Configuration | Complete settings reference |
+| [04](./manual/04-gui-guide.md) | GUI Guide | Graphical interface tutorial |
+| [05](./manual/05-cli-guide.md) | CLI Guide | Command-line reference |
+| [06](./manual/06-api-reference.md) | API Reference | Programming interface docs |
+| [07](./manual/07-vpn-setup.md) | VPN Setup | VPN integration guide |
+| [08](./manual/08-proxy-management.md) | Proxy Management | Proxy configuration |
+| [09](./manual/09-tor-integration.md) | Tor Integration | Tor network setup |
+| [10](./manual/10-security.md) | Security | Security features guide |
 
-#### **Enable Comprehensive Debugging**
-```bash
-# Maximum debug information
-python ip_rotator.py --debug --verbose --log-level DEBUG --trace-all
+**📖 [View Complete Manual Index](./manual/README.md)**
 
-# Specific component debugging
-python ip_rotator.py --debug-proxy --debug-tor --debug-security
-python ip_rotator.py --debug-network --debug-rotation --debug-api
+### 🔗 **Additional Resources**
 
-# Export debug information
-python ip_rotator.py --debug --export-debug debug_report.zip
-```
-
-#### **Professional Logging Configuration**
-```json
-{
-    "logging": {
-        "level": "DEBUG",
-        "handlers": ["console", "file", "syslog"],
-        "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-        "rotation": "daily",
-        "retention": "30 days",
-        "sensitive_data_masking": true
-    }
-}
-```
-
-### 🆘 Getting Professional Support
-
-#### **Self-Service Resources**
-- 📖 **Documentation**: Check `/docs/` directory for detailed guides
-- 🔍 **FAQ**: Common questions and solutions in `docs/FAQ.md`
-- 🎥 **Video Tutorials**: Step-by-step setup and usage guides
-- 📋 **Examples**: Sample configurations in `config/profiles/`
-
-#### **Community Support**
-- 💬 **GitHub Issues**: Report bugs and request features
-- 🗨️ **Discord Channel**: Real-time community support
-- 📧 **Mailing List**: Updates and announcements
-- 🐦 **Twitter**: Follow for tips and updates
-
-#### **Professional Support Options**
-- 🏢 **Enterprise Support**: Priority support for business users
-- 🎓 **Training Programs**: Professional cybersecurity training
-- 🔧 **Custom Solutions**: Tailored implementations
-- 📞 **24/7 Support**: Critical issue support for enterprise users
-
-### 📈 Performance Optimization Guide
-
-#### **System Requirements Optimization**
-```bash
-# Minimum system requirements check
-python ip_rotator.py --system-requirements --recommend-hardware
-
-# Performance tuning
-python ip_rotator.py --optimize-system --tune-network-stack
-python ip_rotator.py --memory-optimization --cpu-optimization
-```
-
-#### **Network Performance Tuning**
-```bash
-# Connection optimization
-python ip_rotator.py --optimize-connections --tune-timeouts
-python ip_rotator.py --connection-pooling --keep-alive-optimization
-
-# Bandwidth management
-python ip_rotator.py --bandwidth-limit 10MB --concurrent-limit 5
-python ip_rotator.py --quality-of-service --priority-routing
-```
+- 📋 **[Release Checklist](./RELEASE_CHECKLIST.md)** - Production deployment guide
+- 👨‍💻 **[Developer Message](./DEVELOPER_MESSAGE.md)** - Message from the creator
+- 🤝 **[Contributing](./CONTRIBUTING.md)** - How to contribute
+- 🔒 **[Security Policy](./SECURITY.md)** - Security reporting
+- 📝 **[Changelog](./CHANGELOG.md)** - Version history
 
 ---
 
@@ -681,361 +1163,181 @@ python ip_rotator.py --quality-of-service --priority-routing
 
 ## ⚖️ Legal & Ethical Use Guidelines
 
-### 🛡️ **CRITICAL LEGAL DISCLAIMER**
-This tool is designed exclusively for **authorized security testing, research, and educational purposes**. Users must:
+### 🚨 **CRITICAL LEGAL DISCLAIMER**
+
+<div align="center">
+<b>⚠️ This tool is designed exclusively for authorized security testing, research, and educational purposes ⚠️</b>
+</div>
+
+#### **📋 Legal Requirements**
+
+Users MUST:
 - ✅ **Obtain explicit written authorization** before testing any system
-- ✅ **Comply with all applicable laws** and regulations in your jurisdiction
+- ✅ **Comply with all applicable laws** in your jurisdiction
 - ✅ **Respect terms of service** of all networks and services
 - ✅ **Use only for legitimate purposes** as outlined below
 - ✅ **Maintain proper documentation** of authorized activities
 
-### 🎯 Authorized Professional Use Cases
+#### **🎯 Authorized Use Cases**
 
-#### **Cybersecurity Professionals**
-- **🔍 Penetration Testing**: Authorized security assessments with proper scope
-- **🛡️ Security Research**: Academic and commercial security research
-- **🎓 Training & Education**: Cybersecurity education in controlled environments
-- **🏆 Bug Bounty Programs**: Authorized vulnerability research programs
-- **📋 Compliance Testing**: Regulatory compliance and audit requirements
-- **🔬 Forensic Analysis**: Digital forensics and incident response
+<details>
+<summary><b>🔒 Cybersecurity Professionals</b></summary>
 
-#### **Enterprise Security Teams**
-- **🏢 Internal Security Testing**: Testing own organization's security posture
-- **📊 Security Awareness**: Demonstrating attack techniques for training
-- **🔧 Tool Development**: Developing and testing security tools
-- **📈 Risk Assessment**: Comprehensive security risk evaluations
-- **🛠️ Security Architecture**: Designing and testing security controls
-- **📋 Audit Preparation**: Preparing for external security audits
+- **Penetration Testing**: Authorized security assessments with proper scope
+- **Security Research**: Academic and commercial security research
+- **Training & Education**: Cybersecurity education in controlled environments
+- **Bug Bounty Programs**: Authorized vulnerability research programs
+- **Compliance Testing**: Regulatory compliance and audit requirements
+- **Forensic Analysis**: Digital forensics and incident response
+</details>
 
-#### **Educational Institutions**
-- **🎓 Cybersecurity Courses**: Hands-on learning in controlled lab environments
-- **🔬 Research Projects**: Academic research with proper ethical approval
-- **🏫 Certification Training**: Professional certification preparation
-- **📚 Skills Development**: Building practical cybersecurity skills
-- **🎯 Competitive Events**: Capture The Flag (CTF) competitions
-- **📖 Curriculum Development**: Creating cybersecurity educational content
+<details>
+<summary><b>🏢 Enterprise Security Teams</b></summary>
 
-### 🚫 Strictly Prohibited Activities
+- **Internal Security Testing**: Testing own organization's security posture
+- **Security Awareness**: Demonstrating attack techniques for training
+- **Tool Development**: Developing and testing security tools
+- **Risk Assessment**: Comprehensive security risk evaluations
+- **Security Architecture**: Designing and testing security controls
+- **Audit Preparation**: Preparing for external security audits
+</details>
 
-#### **Illegal Activities**
-- ❌ **Unauthorized Access**: Accessing systems without explicit permission
-- ❌ **Data Theft**: Stealing, copying, or exfiltrating data without authorization
-- ❌ **Service Disruption**: Denial of service attacks or system disruption
-- ❌ **Privacy Violations**: Unauthorized surveillance or data collection
-- ❌ **Fraud**: Using anonymity for fraudulent activities
-- ❌ **Harassment**: Using the tool for harassment or stalking
+<details>
+<summary><b>🎓 Educational Institutions</b></summary>
 
-#### **Unethical Use**
-- ❌ **Terms of Service Violations**: Bypassing legitimate service restrictions
-- ❌ **Copyright Infringement**: Circumventing content protection systems
-- ❌ **Market Manipulation**: Using anonymity for unfair trading practices
-- ❌ **Spam & Abuse**: Mass messaging or automated abuse
-- ❌ **Identity Theft**: Impersonating others or stealing identities
-- ❌ **Malware Distribution**: Distributing malicious software
+- **Cybersecurity Courses**: Hands-on learning in controlled environments
+- **Research Projects**: Academic research with proper ethical approval
+- **Certification Training**: Professional certification preparation
+- **Skills Development**: Building practical cybersecurity skills
+- **Competitive Events**: Capture The Flag (CTF) competitions
+- **Curriculum Development**: Creating cybersecurity educational content
+</details>
 
-### 📋 Professional Compliance Framework
+#### **🚫 Strictly Prohibited Activities**
 
-#### **Documentation Requirements**
-1. **📄 Authorization Letters**: Written permission from system owners
-2. **📊 Scope Definition**: Clear boundaries of testing activities  
-3. **🕐 Time Windows**: Specific testing timeframes
-4. **👥 Contact Information**: Emergency contacts and escalation procedures
-5. **📋 Reporting Structure**: How findings will be documented and reported
-6. **🔒 Data Handling**: Procedures for handling sensitive information
+<div align="center">
 
-#### **Best Practice Guidelines**
-1. **🎯 Principle of Least Privilege**: Use minimum necessary permissions
-2. **📊 Proportional Response**: Match testing intensity to risk assessment
-3. **🔄 Continuous Monitoring**: Track all activities with detailed logs
-4. **⚡ Immediate Reporting**: Report critical findings immediately
-5. **🛡️ Data Protection**: Protect all collected data with encryption
-6. **🗑️ Secure Disposal**: Safely dispose of test data after completion
+| ❌ **Illegal Activities** | ❌ **Unethical Use** |
+|---------------------------|----------------------|
+| Unauthorized access | Terms of service violations |
+| Data theft | Copyright infringement |
+| Service disruption | Market manipulation |
+| Privacy violations | Spam & abuse |
+| Fraud | Identity theft |
+| Harassment | Malware distribution |
 
-### 🌍 International Legal Considerations
+</div>
 
-#### **Key Jurisdictions & Laws**
-- **🇺🇸 United States**: Computer Fraud and Abuse Act (CFAA), DMCA
-- **🇪🇺 European Union**: GDPR, Computer Misuse Directive
-- **🇬🇧 United Kingdom**: Computer Misuse Act 1990
-- **🇨🇦 Canada**: Criminal Code provisions on computer crime
-- **🇦🇺 Australia**: Cybercrime Act 2001
-- **🇯🇵 Japan**: Unauthorized Computer Access Law
+#### **📄 Compliance Framework**
 
-#### **Cross-Border Testing Considerations**
-- **📍 Data Location**: Understand where data is processed and stored
-- **🌐 Jurisdiction**: Determine applicable laws for testing activities
-- **🛂 Data Transfer**: Comply with international data transfer regulations
-- **📋 Local Compliance**: Ensure compliance with local cybersecurity laws
-- **🤝 International Cooperation**: Follow proper channels for cross-border testing
-
-### 🔧 Technical Dependencies & Licensing
-
-#### **Core Dependencies**
-```python
-# Production Dependencies
-requests==2.31.0           # HTTP library for web requests
-pysocks==1.7.1            # SOCKS proxy support
-stem==1.8.1               # Tor controller library
-colorama==0.4.6           # Cross-platform colored terminal text
-psutil==5.9.6             # System and process utilities
-netifaces==0.11.0         # Network interface information
-scapy==2.5.0              # Network packet manipulation
-python-nmap==0.7.1        # Network discovery and auditing
-
-# Security Dependencies
-cryptography>=3.4.8       # Cryptographic recipes and primitives
-pyopenssl>=21.0.0         # Python wrapper around OpenSSL
-certifi>=2021.10.8        # Mozilla's CA certificate bundle
-urllib3>=1.26.7           # HTTP library with security improvements
-
-# Optional Professional Features
-selenium==4.15.0          # Web browser automation
-beautifulsoup4==4.12.2    # HTML/XML parsing
-pandas==2.1.3             # Data analysis and manipulation
-matplotlib==3.8.2         # Plotting and visualization
-numpy==1.25.2             # Numerical computing
-```
-
-#### **Development Dependencies**
-```python
-# Testing Framework
-pytest>=7.4.3            # Testing framework
-pytest-cov>=4.1.0        # Coverage reporting
-pytest-mock>=3.12.0      # Mock object library
-coverage>=7.3.2          # Code coverage measurement
-
-# Code Quality
-black>=23.11.0           # Code formatter
-flake8>=6.1.0           # Style guide enforcement
-mypy>=1.7.1             # Static type checker
-bandit>=1.7.5           # Security linter
-
-# Documentation
-sphinx>=7.2.6           # Documentation generator
-sphinx-rtd-theme>=1.3.0 # ReadTheDocs theme
-```
-
-### 🤝 Contributing to Professional Development
-
-#### **Contribution Guidelines**
-1. **🔍 Security First**: All contributions must maintain security focus
-2. **📋 Documentation**: Comprehensive documentation for all features
-3. **🧪 Testing**: Minimum 90% code coverage for new features
-4. **⚖️ Legal Compliance**: Ensure all contributions support legal use
-5. **🎯 Ethical Standards**: Maintain high ethical standards
-6. **🔄 Code Review**: All changes require peer review
-
-#### **Development Process**
-```bash
-# 1. Fork the repository
-git clone https://github.com/your-username/cyberrotate-pro.git
-cd cyberrotate-pro
-
-# 2. Create feature branch
-git checkout -b feature/awesome-security-feature
-
-# 3. Set up development environment
-python -m venv dev-env
-source dev-env/bin/activate  # Linux/macOS
-pip install -r requirements-dev.txt
-
-# 4. Implement and test
-python -m pytest tests/ --cov=core/
-python -m black core/ tests/
-python -m flake8 core/ tests/
-
-# 5. Submit pull request with:
-#    - Detailed description
-#    - Security impact assessment
-#    - Test results and coverage
-#    - Documentation updates
-```
-
-## 📄 License & Terms
-
-### 📋 MIT License with Ethical Use Clause
-
-```
-MIT License with Ethical Use Restrictions
-
-Copyright (c) 2025 CyberRotate Pro Development Team
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-ETHICAL USE REQUIREMENT:
-The Software shall be used only for authorized security testing, research,
-and educational purposes. Any use for illegal, unethical, or unauthorized
-activities is strictly prohibited and violates this license.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
-
-### 🛡️ Disclaimer & Limitation of Liability
-
-**THE AUTHORS AND CONTRIBUTORS PROVIDE THIS SOFTWARE "AS IS" WITHOUT WARRANTY OF ANY KIND. USERS ARE SOLELY RESPONSIBLE FOR:**
-
-- ✅ **Legal Compliance**: Ensuring use complies with all applicable laws
-- ✅ **Authorization**: Obtaining proper authorization before testing
-- ✅ **Risk Assessment**: Evaluating and managing security risks
-- ✅ **Data Protection**: Protecting all collected or processed data
-- ✅ **Professional Standards**: Maintaining ethical and professional conduct
-
-**THE SOFTWARE IS NOT INTENDED FOR AND MUST NOT BE USED FOR ILLEGAL ACTIVITIES. THE AUTHORS DISCLAIM ALL LIABILITY FOR MISUSE OF THIS SOFTWARE.**
+**Documentation Requirements:**
+1. **Authorization Letters** - Written permission from system owners
+2. **Scope Definition** - Clear boundaries of testing activities
+3. **Time Windows** - Specific testing timeframes
+4. **Contact Information** - Emergency contacts and escalation procedures
+5. **Reporting Structure** - How findings will be documented
+6. **Data Handling** - Procedures for sensitive information
 
 ---
 
-## 🙏 Acknowledgments & Professional Credits
+## 🤝 Contributing
 
-### 🏆 **Special Recognition**
+We welcome contributions from the cybersecurity community! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
 
-**Created by Yashab Alam - Founder & CEO of ZehraSec:**
-- **🛡️ Lead Security Architect**: Advanced anonymity and security systems design
-- **🔬 Principal Researcher**: Privacy-enhancing technology research and development
-- **👨‍💻 Lead Developer**: Core application architecture and implementation
-- **🎓 Security Educator**: Professional cybersecurity training and mentorship
-- **📋 Project Vision**: Ethical hacking tools for security professionals worldwide
+### 🎯 **How to Contribute**
 
-**ZehraSec Core Development Team:**
-- **Network Engineering Lead**: Proxy management and Tor integration specialists
-- **DevOps Engineers**: Cross-platform deployment and automation experts
-- **Security Researchers**: Leak detection and vulnerability analysis team
-- **Quality Assurance Team**: Comprehensive testing and validation specialists
-- **Documentation Team**: Professional guides and educational content creators
+1. **🍴 Fork** the repository
+2. **🌿 Create** a feature branch
+3. **✨ Make** your improvements
+4. **🧪 Test** thoroughly
+5. **📝 Document** your changes
+6. **🔄 Submit** a pull request
 
-### 🎯 **Technical Inspiration & Research**
+### 👥 **Contributors**
 
-**Academic Research Partners:**
-- Advanced anonymity network research from leading cybersecurity universities
-- Privacy-enhancing technology research from academic institutions worldwide
-- Network security protocols and implementation from security standards organizations
-- Cybersecurity best practices from industry frameworks (NIST, ISO 27001, OWASP)
-
-**Open Source Community Contributions:**
-- **Tor Project**: Anonymity network protocols and robust implementation foundations
-- **Python Community**: Excellent development frameworks and security-focused libraries
-- **Requests Library**: Reliable HTTP/HTTPS communication infrastructure
-- **Cybersecurity Community**: Threat intelligence sharing and responsible disclosure practices
-
-### 🌐 **Professional Network & Partnerships**
-
-**Industry Collaboration:**
-- **Leading Cybersecurity Companies**: Threat intelligence and best practice sharing
-- **Ethical Hacking Communities**: Responsible disclosure and professional standards
-- **Academic Security Programs**: Research validation and educational partnerships
-- **Professional Organizations**: CISSP, CEH, OSCP certification standards integration
-
-**ZehraSec Professional Network:**
-- **Security Consulting Partners**: Enterprise security implementation specialists
-- **Training & Certification Partners**: Professional development program collaborators
-- **Research Institutions**: University partnerships for advanced security research
-- **Industry Mentors**: Cybersecurity leaders providing guidance and expertise
-
-### 🏢 **About ZehraSec's Mission**
-
-**ZehraSec** continues Yashab Alam's vision of advancing cybersecurity through:
-- **🛡️ Professional Tool Development**: Creating enterprise-grade security solutions
-- **🎓 Education & Training**: Developing cybersecurity professionals worldwide
-- **🔬 Research Innovation**: Advancing privacy and anonymity technologies
-- **🤝 Community Building**: Supporting ethical hacking and security communities
-- **📚 Knowledge Sharing**: Open-source contributions and educational resources
-
-**Connect with the ZehraSec Community:**
-- 🌐 **Official Website**: [www.zehrasec.com](https://www.zehrasec.com)
-- 💻 **GitHub Organization**: [@yashab-cyber](https://github.com/yashab-cyber)
-- 📸 **Instagram**: [@_zehrasec](https://www.instagram.com/_zehrasec) | [@yashab.alam](https://www.instagram.com/yashab.alam)
-- � **LinkedIn**: [ZehraSec Company](https://www.linkedin.com/company/zehrasec) | [Yashab Alam](https://www.linkedin.com/in/yashabalam)
-- 🐦 **Twitter/X**: [@zehrasec](https://x.com/zehrasec)
-- 💬 **WhatsApp**: [ZehraSec Updates Channel](https://whatsapp.com/channel/0029Vaoa1GfKLaHlL0Kc8k1q)
-- 📘 **Facebook**: [ZehraSec Official](https://www.facebook.com/profile.php?id=61575580721849)
+- **Yashab Alam** - Creator & Lead Developer
+- **ZehraSec Team** - Core development and security review
+- **Community Contributors** - Bug reports, feature requests, and improvements
 
 ---
 
-**🚀 Built with passion by Yashab Alam and the ZehraSec team for the global cybersecurity community - advancing ethical hacking through innovative, responsible, and professional security technology. 🛡️**
+## 📞 Support
 
-**Remember: CyberRotate Pro embodies ZehraSec's commitment to ethical cybersecurity. Use this powerful tool responsibly, legally, and professionally to protect and defend digital infrastructure worldwide.**
+### 🆘 **Getting Help**
+
+- 📖 **Documentation**: Check the [manual/](./manual/) directory
+- 🐛 **Issues**: [GitHub Issues](https://github.com/yashab-cyber/cyberrotate-pro/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/yashab-cyber/cyberrotate-pro/discussions)
+- 📧 **Email**: [yashabalam707@gmail.com](mailto:yashabalam707@gmail.com)
+
+### 🏢 **Professional Support**
+
+For enterprise support, training, or custom development:
+- 🌐 **Website**: [zehrasec.com](https://www.zehrasec.com)
+- 💼 **LinkedIn**: [ZehraSec Company](https://www.linkedin.com/company/zehrasec)
+- 📧 **Business**: Contact through our website for consulting services
+
+### 🌐 **Community**
+
+- 📸 **Instagram**: [@_zehrasec](https://www.instagram.com/_zehrasec)
+- 🐦 **Twitter**: [@zehrasec](https://x.com/zehrasec)
+- 💬 **WhatsApp**: [Updates Channel](https://whatsapp.com/channel/0029Vaoa1GfKLaHlL0Kc8k1q)
+
+---
 
 ## 💖 Support the Project
 
-CyberRotate Pro is developed and maintained by **Yashab Alam** and the ZehraSec team as part of our commitment to advancing cybersecurity education and professional development. Your support helps us continue developing innovative security tools and educational resources for the cybersecurity community.
+CyberRotate Pro is developed and maintained by **Yashab Alam** and the **ZehraSec** team. Your support helps us continue developing innovative security tools for the cybersecurity community.
 
-### 🎯 Why Support CyberRotate Pro?
+### 💰 **Support Options**
 
-- **🛡️ Professional Development**: Continuous improvement of security tools and features
-- **🎓 Educational Resources**: Free cybersecurity training materials and tutorials
-- **🔬 Research & Innovation**: Funding for advanced security research projects
-- **🌐 Community Building**: Supporting the ethical hacking and cybersecurity community
-- **📚 Documentation**: Maintaining comprehensive guides and best practices
-- **🆓 Open Source**: Keeping professional tools freely available for education
+- ⭐ **Star** this repository
+- 🐛 **Report** bugs and issues
+- 📝 **Contribute** code improvements
+- 📢 **Share** with the community
+- ☕ **Buy me a coffee**: [Support Yashab's Work](https://www.buymeacoffee.com/yashabalam)
+- 💰 **PayPal**: [Direct Support](https://www.paypal.me/yashabalam)
 
-### 💰 How to Support
-
-#### **💳 Financial Support**
-- **☕ Buy Me a Coffee**: [Support Yashab's Work](https://www.buymeacoffee.com/yashabalam)
-- **🎁 PayPal Donation**: [Direct PayPal Support](https://www.paypal.me/yashabalam)
-- **💰 GitHub Sponsors**: [Become a GitHub Sponsor](https://github.com/sponsors/yashab-cyber)
-- **🏢 Corporate Sponsorship**: Contact us for enterprise sponsorship opportunities
-
-#### **🤝 Non-Financial Support**
-- **⭐ Star the Repository**: Show your appreciation on GitHub
-- **🐛 Report Issues**: Help improve the tool by reporting bugs
-- **📝 Contribute Code**: Submit pull requests and improvements
-- **📢 Spread the Word**: Share with fellow cybersecurity professionals
-- **📚 Documentation**: Help improve guides and tutorials
-- **💬 Community Support**: Help other users in discussions
-
-#### **🏢 Enterprise & Professional Support**
-For organizations and professionals seeking:
-- **🔧 Custom Development**: Tailored security solutions
-- **🎓 Professional Training**: Cybersecurity team training programs
-- **📋 Consultation Services**: Security architecture and implementation
-- **🔒 Enterprise Licensing**: Commercial licensing options
-
-**Contact:** [yashabalam707@gmail.com](mailto:yashabalam707@gmail.com)
-
-### � **Detailed Donation Information**
-
-For comprehensive donation options, sponsorship tiers, and detailed information about supporting CyberRotate Pro development, please see our dedicated donation page:
-
-**📖 [DONATE.md - Complete Donation Guide](./DONATE.md)**
-
-The donation guide includes:
-- **💰 Multiple Payment Methods** - Cryptocurrency, PayPal, GitHub Sponsors, and more
-- **🎯 Sponsorship Tiers** - Bronze, Silver, Gold, and Diamond supporter levels
-- **🏢 Corporate Partnerships** - Enterprise sponsorship and collaboration opportunities
-- **📊 Transparency Reports** - How donations are used and project impact
-- **🌟 Supporter Recognition** - Hall of fame and community acknowledgments
-
-### �🙏 Supporter Recognition
-
-**Special thanks to our supporters who make this project possible:**
-- **🌟 Individual Contributors**: Community members who contribute code, documentation, and feedback
-- **🏢 Corporate Sponsors**: Companies supporting cybersecurity education and research
-- **🎓 Educational Partners**: Universities and training institutions using our tools
-- **🔒 Security Professionals**: Ethical hackers and researchers providing valuable insights
-
-### 📄 Transparency
-
-We believe in full transparency about how support funds are used:
-- **70%** - Development and maintenance of security tools
-- **20%** - Educational resources and community support
-- **10%** - Infrastructure and operational costs
-
-**For detailed financial transparency reports, visit:** [zehrasec.com](https://zehrasec.com)
+For detailed donation information, see [DONATE.md](./DONATE.md).
 
 ---
 
-*Your support, whether financial or through contributions, helps us continue building professional cybersecurity tools that benefit the entire security community. Thank you for being part of our mission to advance ethical hacking and cybersecurity education!*
+## 📄 License
+
+This project is licensed under the **MIT License with Ethical Use Restrictions** - see the [LICENSE](LICENSE) file for details.
+
+### 🛡️ **Ethical Use Clause**
+
+This software shall be used only for authorized security testing, research, and educational purposes. Any use for illegal, unethical, or unauthorized activities is strictly prohibited and violates this license.
+
+---
+
+## 🙏 Acknowledgments
+
+### 🏆 **Special Thanks**
+
+- **Yashab Alam** - Creator, Founder & CEO of ZehraSec
+- **ZehraSec Team** - Development, security review, and testing
+- **Cybersecurity Community** - Inspiration, feedback, and support
+- **Open Source Contributors** - Libraries and tools that make this possible
+- **Academic Partners** - Research collaboration and validation
+
+### 🌟 **Featured By**
+
+*Share this project and help us grow the ethical cybersecurity community!*
+
+---
+
+<div align="center">
+
+### 🛡️ Built with ❤️ by the ZehraSec Team
+
+**"Advancing cybersecurity through ethical innovation and professional excellence"**
+
+[![GitHub](https://img.shields.io/badge/GitHub-yashab--cyber-blue?style=for-the-badge&logo=github)](https://github.com/yashab-cyber)
+[![Website](https://img.shields.io/badge/Website-ZehraSec-green?style=for-the-badge&logo=firefox)](https://www.zehrasec.com)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-ZehraSec-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/company/zehrasec)
+
+**⭐ Star this repo • 🍴 Fork it • 📢 Share it • 🤝 Contribute to it**
+
+</div>
