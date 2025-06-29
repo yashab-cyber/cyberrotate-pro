@@ -7,8 +7,11 @@ param(
     [switch]$DevMode
 )
 
-Write-Host "CyberRotate Pro - Windows Installation Script" -ForegroundColor Green
-Write-Host "=============================================" -ForegroundColor Green
+Write-Host "CyberRotate Pro Enterprise - Windows Installation Script v2.0" -ForegroundColor Green
+Write-Host "================================================================" -ForegroundColor Green
+Write-Host "Created by Yashab Alam - Founder of ZehraSec" -ForegroundColor Green
+Write-Host "Enterprise Edition with Full Production Support" -ForegroundColor Green
+Write-Host "================================================================" -ForegroundColor Green
 
 # Function to check if running as administrator
 function Test-Administrator {
@@ -64,21 +67,31 @@ try {
 
 # Install Python dependencies
 if (-not $SkipDependencies) {
-    Write-Host "Installing Python dependencies..." -ForegroundColor Cyan
+    Write-Host "Installing Python dependencies (complete enterprise suite)..." -ForegroundColor Cyan
     
-    if ($DevMode) {
-        Write-Host "Installing development dependencies..." -ForegroundColor Yellow
-        pip install -r requirements-dev.txt
-    } else {
-        pip install -r requirements.txt
-    }
-    
+    # Install all dependencies from main requirements.txt
+    pip install -r requirements.txt
     if ($LASTEXITCODE -ne 0) {
-        Write-Host "Failed to install Python dependencies." -ForegroundColor Red
+        Write-Host "Failed to install dependencies." -ForegroundColor Red
         exit 1
     }
     
-    Write-Host "Python dependencies installed successfully!" -ForegroundColor Green
+    Write-Host "All dependencies installed successfully!" -ForegroundColor Green
+    Write-Host "✓ Core components" -ForegroundColor Green
+    Write-Host "✓ Enterprise features" -ForegroundColor Green  
+    Write-Host "✓ Analytics dashboard" -ForegroundColor Green
+    Write-Host "✓ Development tools" -ForegroundColor Green
+    Write-Host "✓ Optional features" -ForegroundColor Green
+    
+    # Note: Individual requirements files are maintained for reference
+    }
+    
+    if ($DevMode) {
+        Write-Host "Installing development dependencies..." -ForegroundColor Yellow
+        if (Test-Path "requirements-dev.txt") {
+            pip install -r requirements-dev.txt
+        }
+    }
 }
 
 # Check for OpenVPN
@@ -151,18 +164,28 @@ Write-Host "Created cyberrotate.ps1 launcher" -ForegroundColor Green
 
 # Installation complete
 Write-Host ""
-Write-Host "Installation completed successfully!" -ForegroundColor Green
-Write-Host "=============================================" -ForegroundColor Green
+Write-Host "CyberRotate Pro Enterprise Edition Installation Completed!" -ForegroundColor Green
+Write-Host "=========================================================" -ForegroundColor Green
 Write-Host ""
-Write-Host "To start CyberRotate Pro:" -ForegroundColor Cyan
-Write-Host "  Method 1: python ip_rotator.py" -ForegroundColor White
-Write-Host "  Method 2: python ip_rotator.py --gui (Graphical Interface)" -ForegroundColor White
-Write-Host "  Method 3: .\cyberrotate.bat" -ForegroundColor White
-Write-Host "  Method 4: .\cyberrotate.ps1" -ForegroundColor White
-Write-Host "  Method 5: .\start_gui.bat (GUI only)" -ForegroundColor White
+Write-Host "Core Features:" -ForegroundColor Cyan
+Write-Host "  1. python ip_rotator.py --interactive (Interactive mode)" -ForegroundColor White
+Write-Host "  2. python ip_rotator.py --gui (Graphical Interface)" -ForegroundColor White
+Write-Host "  3. .\start_gui.bat (GUI launcher)" -ForegroundColor White
+Write-Host "  4. .\cyberrotate.bat (Batch launcher)" -ForegroundColor White
+Write-Host ""
+Write-Host "Enterprise Features:" -ForegroundColor Cyan
+Write-Host "  5. python ip_rotator.py --api-server (API Server)" -ForegroundColor White
+Write-Host "  6. python ip_rotator.py --dashboard (Analytics Dashboard)" -ForegroundColor White
+Write-Host "  7. python ip_rotator.py --cli-pro (Enhanced CLI)" -ForegroundColor White
+Write-Host "  8. python ip_rotator.py --web-dashboard (Web Dashboard)" -ForegroundColor White
+Write-Host "  9. python ip_rotator.py --production-test (Production Tests)" -ForegroundColor White
+Write-Host ""
+Write-Host "Configuration:" -ForegroundColor Cyan
+Write-Host "  - config/config.json (main configuration)" -ForegroundColor White
+Write-Host "  - config/api_config.json (API server configuration)" -ForegroundColor White
+Write-Host "  - manual/ (complete documentation)" -ForegroundColor White
 Write-Host ""
 Write-Host "For help: python ip_rotator.py --help" -ForegroundColor Cyan
-Write-Host "For interactive mode: python ip_rotator.py --interactive" -ForegroundColor Cyan
 Write-Host ""
 
 # Optional: Add to PATH

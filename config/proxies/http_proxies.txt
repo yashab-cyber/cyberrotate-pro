@@ -3,5 +3,9 @@
 # Example: 192.168.1.100:8080
 # Example: user:pass@proxy.example.com:3128
 
-# SOCKS Proxies
-# socks5://127.0.0.1:1080
+# Public HTTP Proxies for testing (may be slow or unreliable)
+8.210.83.33:80
+45.77.35.55:3128
+188.166.56.86:8080
+161.35.70.249:8080
+159.203.61.169:8080

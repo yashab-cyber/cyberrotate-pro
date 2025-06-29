@@ -5,8 +5,9 @@
 set -e
 
 echo "=================================================="
-echo "  CyberRotate Pro - Installation Script"
+echo "  CyberRotate Pro - Installation Script v2.0"
 echo "  Created by Yashab Alam - Founder of ZehraSec"
+echo "  Enterprise Edition with Full Production Support"
 echo "=================================================="
 
 # Colors for output
@@ -139,13 +140,47 @@ print_status "Upgrading pip..."
 pip install --upgrade pip
 
 # Install Python dependencies
-print_status "Installing Python dependencies..."
+print_status "Installing Python dependencies (complete enterprise suite)..."
 if [[ -f "requirements.txt" ]]; then
     pip install -r requirements.txt
-    print_success "Core dependencies installed"
+    print_success "All dependencies installed successfully!"
+    print_success "✓ Core components"
+    print_success "✓ Enterprise features"
+    print_success "✓ Analytics dashboard"
+    print_success "✓ Development tools"
+    print_success "✓ Optional features"
 else
     print_error "requirements.txt not found"
     exit 1
+fi
+
+# Note: Individual requirements files are maintained for reference but main requirements.txt contains everything
+
+# Install Docker if not present (for production deployment)
+print_status "Checking Docker installation..."
+if command -v docker &> /dev/null; then
+    print_success "Docker found"
+else
+    print_warning "Docker not found. Installing Docker for production deployment..."
+    if [[ "$OS" == "linux" ]]; then
+        curl -fsSL https://get.docker.com -o get-docker.sh
+        sudo sh get-docker.sh
+        sudo usermod -aG docker $USER
+        print_success "Docker installed. Please log out and back in for group changes to take effect."
+    else
+        print_warning "Please install Docker manually for production deployment features"
+    fi
+fi
+
+# Install Docker Compose
+print_status "Checking Docker Compose installation..."
+if command -v docker-compose &> /dev/null; then
+    print_success "Docker Compose found"
+else
+    print_warning "Installing Docker Compose..."
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    print_success "Docker Compose installed"
 fi
 
 # Install optional dependencies
@@ -163,10 +198,28 @@ mkdir -p data/logs
 mkdir -p data/stats
 mkdir -p data/reports
 mkdir -p config/profiles
+mkdir -p templates
+mkdir -p static/css
+mkdir -p static/js
+
+# Initialize database if enterprise mode is enabled
+print_status "Initializing enterprise features..."
+if [[ -f "core/database_manager.py" ]]; then
+    python3 -c "from core.database_manager import DatabaseManager; dm = DatabaseManager(); dm.initialize_database()" 2>/dev/null || true
+    print_success "Database initialized"
+fi
 
 # Set permissions
 print_status "Setting permissions..."
 chmod +x ip_rotator.py
+chmod +x gui_launcher.py
+chmod +x start_gui.sh
+chmod +x deploy_production.sh
+
+# Make production scripts executable
+if [[ -f "deploy_production.sh" ]]; then
+    chmod +x deploy_production.sh
+fi
 
 # Test installation
 print_status "Testing installation..."
@@ -200,22 +253,32 @@ fi
 # Installation complete
 echo ""
 echo "=================================================="
-print_success "CyberRotate Pro installation completed successfully!"
+print_success "CyberRotate Pro Enterprise Edition installation completed successfully!"
 echo "=================================================="
 echo ""
-print_status "To start using CyberRotate Pro:"
-echo "  1. Activate the virtual environment: source venv/bin/activate"
-echo "  2. Run the application: python3 ip_rotator.py --interactive"
-echo "  3. Launch GUI: python3 ip_rotator.py --gui"
-echo "  4. GUI shortcut: ./start_gui.sh"
+print_status "Core Features:"
+echo "  1. Basic rotation: python3 ip_rotator.py --interactive"
+echo "  2. GUI interface: python3 ip_rotator.py --gui"
+echo "  3. Quick start: ./start_gui.sh"
 echo ""
-print_status "For command line usage:"
-echo "  python3 ip_rotator.py --help"
+print_status "Enterprise Features:"
+echo "  4. API Server: python3 ip_rotator.py --api-server"
+echo "  5. Analytics Dashboard: python3 ip_rotator.py --dashboard"
+echo "  6. Enhanced CLI: python3 ip_rotator.py --cli-pro"
+echo "  7. Web Dashboard: python3 ip_rotator.py --web-dashboard"
+echo "  8. Production Deploy: ./deploy_production.sh"
+echo "  9. Docker Deploy: python3 ip_rotator.py --docker-deploy"
+echo "  10. Production Tests: python3 ip_rotator.py --production-test"
 echo ""
 print_status "Configuration files are located in:"
 echo "  - config/config.json (main configuration)"
+echo "  - config/api_config.json (API server configuration)"
 echo "  - config/openvpn/ (OpenVPN configurations)"
 echo "  - config/proxies/ (proxy lists)"
+echo ""
+print_status "Enterprise Documentation:"
+echo "  - manual/ (complete user manual)"
+echo "  - PRODUCTION_GUIDE.md (production deployment guide)"
 echo ""
 print_warning "Important Security Notes:"
 echo "  - Only use this tool for authorized testing and research"

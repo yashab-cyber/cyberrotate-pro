@@ -2,13 +2,15 @@
 # Format: socks4://host:port or socks5://host:port
 # For authentication: socks5://username:password@host:port
 
-# Example SOCKS proxies (replace with real ones)
-# socks5://127.0.0.1:1080
-# socks4://proxy.example.com:1080
-# socks5://user:pass@secure-proxy.example.com:1080
+# Public SOCKS Proxies for testing (may be slow or unreliable)
+socks5://72.221.164.34:60671
+socks5://72.195.34.58:4145
+socks5://72.195.34.59:4145
+socks5://198.8.94.170:4145
+socks4://72.195.34.41:4145
 
 # Tor SOCKS proxy (if running locally)
-# socks5://127.0.0.1:9050
+socks5://127.0.0.1:9050
 
 # Notes:
 # - SOCKS5 proxies generally offer better performance

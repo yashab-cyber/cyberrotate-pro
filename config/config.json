@@ -1,7 +1,7 @@
 {
   "rotation_settings": {
-    "methods": ["proxy", "openvpn"],
-    "interval": 10,
+    "methods": ["proxy", "tor"],
+    "interval": 6,
     "max_retries": 3,
     "timeout": 10,
     "fail_threshold": 5,
@@ -82,5 +82,62 @@
     ]
   },
   "debug_mode": false,
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "enterprise_settings": {
+    "enabled": false,
+    "license_key": "",
+    "license_server": "https://license.cyberrotate.com",
+    "database_enabled": false,
+    "database_url": "sqlite:///data/cyberrotate.db",
+    "web_dashboard_enabled": false,
+    "clustering_enabled": false,
+    "node_id": "node-001",
+    "cluster_nodes": [],
+    "backup_enabled": true,
+    "backup_interval": 3600,
+    "audit_logging": true,
+    "rbac_enabled": false,
+    "sso_enabled": false,
+    "custom_branding": false
+  },
+  "api_settings": {
+    "enabled": false,
+    "host": "0.0.0.0",
+    "port": 8080,
+    "ssl_enabled": false,
+    "ssl_cert": "certs/server.crt",
+    "ssl_key": "certs/server.key",
+    "authentication_required": true,
+    "rate_limiting": true,
+    "cors_enabled": true,
+    "allowed_origins": ["*"],
+    "api_version": "v1",
+    "documentation_enabled": true,
+    "health_check_enabled": true,
+    "metrics_enabled": true
+  },
+  "dashboard_settings": {
+    "enabled": false,
+    "port": 8050,
+    "update_interval": 1000,
+    "chart_history_hours": 24,
+    "real_time_monitoring": true,
+    "export_reports": true,
+    "alert_thresholds": {
+      "success_rate_min": 90,
+      "response_time_max": 5000,
+      "error_rate_max": 10
+    }
+  },
+  "production_settings": {
+    "environment": "development",
+    "debug_mode": false,
+    "log_level": "INFO",
+    "max_log_files": 10,
+    "log_rotation_size": "10MB",
+    "health_check_interval": 60,
+    "metrics_collection": true,
+    "error_reporting": false,
+    "performance_profiling": false
+  }
 }

@@ -1,0 +1,40 @@
+{
+  "api_server": {
+    "host": "0.0.0.0",
+    "port": 8080,
+    "debug": false,
+    "allowed_origins": ["*"],
+    "max_requests_per_hour": 1000,
+    "max_requests_per_minute": 100
+  },
+  "database": {
+    "path": "data/api_server.db",
+    "backup_interval": 3600,
+    "retention_days": 30
+  },
+  "security": {
+    "jwt_secret": "your-secret-key-change-this-in-production",
+    "api_key_length": 32,
+    "session_timeout": 3600,
+    "rate_limiting_enabled": true,
+    "require_https": false
+  },
+  "logging": {
+    "level": "INFO",
+    "max_file_size": "10MB",
+    "backup_count": 5,
+    "log_api_calls": true
+  },
+  "monitoring": {
+    "health_check_interval": 30,
+    "metrics_retention_days": 7,
+    "alert_on_failures": true
+  },
+  "features": {
+    "proxy_rotation": true,
+    "vpn_management": true,
+    "tor_integration": true,
+    "analytics": true,
+    "enterprise_features": true
+  }
+}

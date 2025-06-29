@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberRotate Pro - Dashboard</title>
+    
+    <!-- CSS Dependencies -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dashboard.css') }}" rel="stylesheet">
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+    <!-- Socket.IO for real-time updates -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-shield-alt text-blue-600 text-2xl"></i>
+                    <h1 class="text-xl font-bold text-gray-800 dark:text-white">CyberRotate Pro</h1>
+                </div>
+                
+                <div class="flex items-center space-x-6">
+                    <a href="/dashboard" class="nav-link active">Dashboard</a>
+                    <a href="/analytics" class="nav-link">Analytics</a>
+                    <a href="/settings" class="nav-link">Settings</a>
+                    <a href="/logs" class="nav-link">Logs</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <div id="connection-status" class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                        <span class="text-sm text-gray-600 dark:text-gray-300">Disconnected</span>
+                    </div>
+                    <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- License Status Banner -->
+        {% if license_status.status != 'valid' %}
+        <div class="mb-6 p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded-r-lg">
+            <div class="flex items-center">
+                <i class="fas fa-exclamation-triangle text-yellow-500 mr-3"></i>
+                <div>
+                    <h4 class="text-yellow-800 font-semibold">License Notice</h4>
+                    <p class="text-yellow-700">{{ license_status.message }}</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Connection Status Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Status</p>
+                        <p id="status-text" class="text-2xl font-bold text-red-600">Disconnected</p>
+                    </div>
+                    <div class="p-3 bg-red-100 rounded-full">
+                        <i id="status-icon" class="fas fa-times text-red-600"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current IP Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Current IP</p>
+                        <p id="current-ip" class="text-2xl font-bold text-gray-900 dark:text-white">Not Connected</p>
+                    </div>
+                    <div class="p-3 bg-blue-100 rounded-full">
+                        <i class="fas fa-globe text-blue-600"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Location Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Location</p>
+                        <p id="location" class="text-2xl font-bold text-gray-900 dark:text-white">Unknown</p>
+                    </div>
+                    <div class="p-3 bg-green-100 rounded-full">
+                        <i class="fas fa-map-marker-alt text-green-600"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Transfer Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Data Transfer</p>
+                        <p id="data-transfer" class="text-2xl font-bold text-gray-900 dark:text-white">0 MB</p>
+                    </div>
+                    <div class="p-3 bg-purple-100 rounded-full">
+                        <i class="fas fa-exchange-alt text-purple-600"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Control Panel -->
+            <div class="lg:col-span-1">
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Connection Control</h3>
+                    
+                    <!-- Service Selection -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Service Type</label>
+                        <select id="service-type" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="vpn">VPN</option>
+                            <option value="proxy">Proxy</option>
+                            <option value="tor">Tor</option>
+                        </select>
+                    </div>
+
+                    <!-- Server Selection -->
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Server Location</label>
+                        <select id="server-location" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="auto">Auto Select</option>
+                            <option value="us-east-1">US East (Virginia)</option>
+                            <option value="us-west-1">US West (California)</option>
+                            <option value="eu-west-1">EU West (Ireland)</option>
+                            <option value="ap-southeast-1">Asia Pacific (Singapore)</option>
+                        </select>
+                    </div>
+
+                    <!-- Control Buttons -->
+                    <div class="space-y-3">
+                        <button id="connect-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-colors">
+                            <i class="fas fa-play mr-2"></i>Connect
+                        </button>
+                        <button id="disconnect-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition-colors" disabled>
+                            <i class="fas fa-stop mr-2"></i>Disconnect
+                        </button>
+                        <button id="rotate-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-colors" disabled>
+                            <i class="fas fa-sync-alt mr-2"></i>Rotate IP
+                        </button>
+                    </div>
+
+                    <!-- Auto Rotation Settings -->
+                    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-600">
+                        <h4 class="text-md font-semibold text-gray-900 dark:text-white mb-3">Auto Rotation</h4>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm text-gray-700 dark:text-gray-300">Enable Auto Rotation</span>
+                            <input type="checkbox" id="auto-rotation" class="toggle-checkbox">
+                        </div>
+                        <div class="mb-3">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Rotation Interval (minutes)</label>
+                            <input type="range" id="rotation-interval" min="1" max="60" value="15" class="w-full">
+                            <div class="flex justify-between text-xs text-gray-500">
+                                <span>1 min</span>
+                                <span id="interval-value">15 min</span>
+                                <span>60 min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts and Analytics -->
+            <div class="lg:col-span-2">
+                <!-- Connection Timeline Chart -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Connection Timeline</h3>
+                    <canvas id="connection-chart" width="400" height="200"></canvas>
+                </div>
+
+                <!-- Speed Test Results -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Performance Metrics</h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600" id="ping-time">-- ms</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Ping</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600" id="download-speed">-- Mbps</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Download</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-yellow-600" id="upload-speed">-- Mbps</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Upload</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-600" id="success-rate">--%</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Success Rate</div>
+                        </div>
+                    </div>
+                    <button id="speed-test-btn" class="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                        <i class="fas fa-tachometer-alt mr-2"></i>Run Speed Test
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="mt-8">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h3>
+                <div id="activity-log" class="space-y-3 max-h-64 overflow-y-auto">
+                    <!-- Activity items will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

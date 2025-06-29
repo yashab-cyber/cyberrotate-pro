@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  cyberrotate-pro:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cyberrotate-pro
+    ports:
+      - "8080:8080"    # API Server
+      - "8081:8081"    # Analytics Dashboard
+      - "3000:3000"    # Web Interface
+      - "80:80"        # Nginx Proxy
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+      - cyberrotate_logs:/var/log/cyberrotate
+    environment:
+      - ENVIRONMENT=production
+      - API_KEY_SECRET=your_secret_key_here
+      - DATABASE_URL=sqlite:///app/data/cyberrotate.db
+      - REDIS_URL=redis://redis:6379/0
+    networks:
+      - cyberrotate_network
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+
+  redis:
+    image: redis:7-alpine
+    container_name: cyberrotate-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - cyberrotate_network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: cyberrotate-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=cyberrotate
+      - POSTGRES_USER=cyberrotate
+      - POSTGRES_PASSWORD=secure_password_here
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init_db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - cyberrotate_network
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: cyberrotate-nginx
+    ports:
+      - "443:443"
+    volumes:
+      - ./docker/nginx-ssl.conf:/etc/nginx/conf.d/default.conf
+      - ./ssl:/etc/nginx/ssl
+    depends_on:
+      - cyberrotate-pro
+    networks:
+      - cyberrotate_network
+    restart: unless-stopped
+
+volumes:
+  cyberrotate_logs:
+  redis_data:
+  postgres_data:
+
+networks:
+  cyberrotate_network:
+    driver: bridge

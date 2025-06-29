@@ -38,6 +38,16 @@ from utils.leak_detector import LeakDetector
 from ui.interactive_menu import InteractiveMenu
 from ui.cli_interface import CLIInterface
 
+# Enterprise imports (conditional)
+try:
+    from core.api_server_enterprise import EnterpriseAPIServer
+    from core.license_manager import LicenseManager
+    from core.database_manager import DatabaseManager
+    from ui.cli_interface_pro import ProCLIInterface
+    ENTERPRISE_AVAILABLE = True
+except ImportError:
+    ENTERPRISE_AVAILABLE = False
+
 # Initialize colorama for cross-platform colored output
 colorama.init(autoreset=True)
 console = Console()
@@ -54,6 +64,13 @@ class RotationConfig:
     countries: List[str]
     enable_logging: bool
     debug_mode: bool
+    # Enterprise features
+    api_enabled: bool = False
+    api_port: int = 8080
+    license_key: str = ""
+    enterprise_mode: bool = False
+    database_enabled: bool = False
+    web_dashboard_enabled: bool = False
 
 class IPRotator:
     """
@@ -73,7 +90,38 @@ class IPRotator:
         self.config = self._load_config()
         self.logger = setup_logger(debug=self.config.debug_mode)
         
-        # Initialize components
+        # Initialize enterprise components first
+        self.license_manager = None
+        self.database_manager = None
+        self.api_server = None
+        
+        if self.config.enterprise_mode and ENTERPRISE_AVAILABLE:
+            try:
+                # Initialize license manager
+                self.license_manager = LicenseManager(self.config.license_key, self.logger)
+                
+                # Initialize database if enabled
+                if self.config.database_enabled:
+                    self.database_manager = DatabaseManager(self.logger)
+                
+                # Initialize API server if enabled
+                if self.config.api_enabled:
+                    self.api_server = EnterpriseAPIServer(
+                        port=self.config.api_port,
+                        license_manager=self.license_manager,
+                        database_manager=self.database_manager,
+                        logger=self.logger
+                    )
+                    
+                self.logger.info("Enterprise features initialized successfully")
+            except Exception as e:
+                self.logger.error(f"Failed to initialize enterprise features: {e}")
+                self.config.enterprise_mode = False
+        elif self.config.enterprise_mode and not ENTERPRISE_AVAILABLE:
+            self.logger.warning("Enterprise mode requested but enterprise modules not available")
+            self.config.enterprise_mode = False
+        
+        # Initialize core components
         self.proxy_manager = ProxyManager(self.logger)
         self.tor_controller = TorController(self.logger)
         self.openvpn_manager = OpenVPNManager(self.logger)
@@ -104,6 +152,8 @@ class IPRotator:
                 # Extract rotation settings
                 rotation_settings = config_data.get('rotation_settings', {})
                 security_settings = config_data.get('security_settings', {})
+                enterprise_settings = config_data.get('enterprise_settings', {})
+                api_settings = config_data.get('api_settings', {})
                 
                 return RotationConfig(
                     methods=rotation_settings.get('methods', ['proxy', 'openvpn']),
@@ -114,7 +164,14 @@ class IPRotator:
                     geolocation_targeting=rotation_settings.get('geolocation_targeting', False),
                     countries=rotation_settings.get('countries', []),
                     enable_logging=config_data.get('monitoring', {}).get('logging_enabled', True),
-                    debug_mode=config_data.get('debug_mode', False)
+                    debug_mode=config_data.get('debug_mode', False),
+                    # Enterprise settings
+                    api_enabled=api_settings.get('enabled', False),
+                    api_port=api_settings.get('port', 8080),
+                    license_key=enterprise_settings.get('license_key', ''),
+                    enterprise_mode=enterprise_settings.get('enabled', False),
+                    database_enabled=enterprise_settings.get('database_enabled', False),
+                    web_dashboard_enabled=enterprise_settings.get('web_dashboard_enabled', False)
                 )
             else:
                 # Return default configuration
@@ -252,6 +309,12 @@ class IPRotator:
     
     def _rotate_tor(self) -> bool:
         """Rotate Tor circuit"""
+        # Ensure Tor controller is connected
+        if not self.tor_controller.is_connected:
+            if not self.tor_controller.connect_to_controller():
+                self.logger.error("Failed to connect to Tor controller")
+                return False
+        
         return self.tor_controller.new_circuit()
     
     def _rotate_openvpn(self) -> bool:
@@ -298,12 +361,23 @@ class IPRotator:
             Dict with IP information or None if failed
         """
         try:
-            response = requests.get('https://ipapi.co/json/', timeout=self.config.timeout)
+            # Configure proxies based on current method
+            proxies = None
+            
+            if self.current_method == 'tor' and self.tor_controller.is_connected:
+                proxies = {
+                    'http': 'socks5://127.0.0.1:9050',
+                    'https': 'socks5://127.0.0.1:9050'
+                }
+            elif self.current_method == 'proxy' and self.proxy_manager.current_proxy:
+                proxies = self.proxy_manager.get_proxy_dict()
+            
+            response = requests.get('https://ipapi.co/json/', proxies=proxies, timeout=self.config.timeout, verify=False)
             if response.status_code == 200:
                 return response.json()
             else:
                 # Fallback to simple IP check
-                response = requests.get('https://httpbin.org/ip', timeout=self.config.timeout)
+                response = requests.get('https://httpbin.org/ip', proxies=proxies, timeout=self.config.timeout, verify=False)
                 if response.status_code == 200:
                     return {'ip': response.json().get('origin')}
         except Exception as e:
@@ -405,7 +479,18 @@ def main():
     parser.add_argument('--debug', action='store_true', help='Enable debug mode')
     parser.add_argument('--test', action='store_true', help='Test current connection')
     parser.add_argument('--stats', action='store_true', help='Show current statistics')
-    parser.add_argument('--version', action='version', version='CyberRotate Pro v1.0.0')
+    parser.add_argument('--version', action='version', version='CyberRotate Pro v2.1.0')
+    
+    # Enterprise features
+    parser.add_argument('--api-server', action='store_true', help='Start API server')
+    parser.add_argument('--api-port', type=int, default=8080, help='API server port')
+    parser.add_argument('--dashboard', action='store_true', help='Launch analytics dashboard')
+    parser.add_argument('--enterprise', action='store_true', help='Enable enterprise mode')
+    parser.add_argument('--license', type=str, help='Enterprise license key')
+    parser.add_argument('--cli-pro', action='store_true', help='Launch enhanced CLI interface')
+    parser.add_argument('--web-dashboard', action='store_true', help='Launch web dashboard')
+    parser.add_argument('--docker-deploy', action='store_true', help='Deploy using Docker')
+    parser.add_argument('--production-test', action='store_true', help='Run production tests')
     
     args = parser.parse_args()
     
@@ -420,6 +505,13 @@ def main():
             rotator.config.interval = args.interval
         if args.debug:
             rotator.config.debug_mode = True
+        if args.enterprise:
+            rotator.config.enterprise_mode = True
+        if args.license:
+            rotator.config.license_key = args.license
+        if args.api_server:
+            rotator.config.api_enabled = True
+            rotator.config.api_port = args.api_port
         
         # Handle different modes
         if args.test:
@@ -462,17 +554,84 @@ def main():
                 console.print(f"[red]Failed to launch GUI: {e}[/red]")
                 console.print("Try running: python gui_launcher.py")
         
+        elif args.api_server:
+            # Start API server
+            if ENTERPRISE_AVAILABLE and rotator.api_server:
+                console.print(f"Starting API server on port {rotator.config.api_port}...")
+                rotator.api_server.start()
+            else:
+                console.print("[red]API server not available. Install enterprise dependencies or enable enterprise mode.[/red]")
+        
+        elif args.dashboard:
+            # Launch analytics dashboard
+            try:
+                import subprocess
+                import sys
+                subprocess.run([sys.executable, 'ui/analytics_dashboard.py'])
+            except Exception as e:
+                console.print(f"[red]Failed to launch dashboard: {e}[/red]")
+                console.print("Try installing dashboard dependencies: pip install -r requirements-dashboard.txt")
+        
+        elif args.cli_pro:
+            # Launch enhanced CLI
+            if ENTERPRISE_AVAILABLE:
+                try:
+                    pro_cli = ProCLIInterface(api_base_url=f"http://localhost:{rotator.config.api_port}")
+                    pro_cli.run()
+                except Exception as e:
+                    console.print(f"[red]Failed to launch Pro CLI: {e}[/red]")
+            else:
+                console.print("[red]Pro CLI not available. Install enterprise dependencies.[/red]")
+        
+        elif args.web_dashboard:
+            # Launch web dashboard
+            try:
+                import subprocess
+                import sys
+                subprocess.run([sys.executable, 'ui/web_dashboard.py'])
+            except Exception as e:
+                console.print(f"[red]Failed to launch web dashboard: {e}[/red]")
+        
+        elif args.docker_deploy:
+            # Deploy using Docker
+            console.print("Starting Docker deployment...")
+            try:
+                import subprocess
+                subprocess.run(['bash', 'deploy_production.sh', '--docker'])
+            except Exception as e:
+                console.print(f"[red]Docker deployment failed: {e}[/red]")
+        
+        elif args.production_test:
+            # Run production tests
+            console.print("Running production test suite...")
+            try:
+                import subprocess
+                result = subprocess.run([sys.executable, 'test_production.py'], capture_output=True, text=True)
+                console.print(result.stdout)
+                if result.stderr:
+                    console.print(f"[red]{result.stderr}[/red]")
+            except Exception as e:
+                console.print(f"[red]Production tests failed: {e}[/red]")
+        
         else:
             # Default behavior - show help or start interactive mode
             console.print("Welcome to CyberRotate Pro!")
             console.print("Use --help for command line options or --interactive for interactive mode.")
             
-            # Ask user what they want to do            console.print("\nQuick start options:")
+            # Ask user what they want to do            
+            console.print("\nQuick start options:")
             console.print("1. Start rotation immediately: --start")
             console.print("2. Interactive mode: --interactive")
             console.print("3. Graphical interface: --gui")
             console.print("4. Test connection: --test")
             console.print("5. Show help: --help")
+            console.print("\nEnterprise features:")
+            console.print("6. Start API server: --api-server")
+            console.print("7. Launch analytics dashboard: --dashboard")
+            console.print("8. Enhanced CLI interface: --cli-pro")
+            console.print("9. Web dashboard: --web-dashboard")
+            console.print("10. Production deployment: --docker-deploy")
+            console.print("11. Run production tests: --production-test")
         
         return 0
         

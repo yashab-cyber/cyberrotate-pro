@@ -1,0 +1,244 @@
+/* CyberRotate Pro - Dashboard CSS */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #64748b;
+    --success-color: #059669;
+    --danger-color: #dc2626;
+    --warning-color: #d97706;
+    --info-color: #0891b2;
+    --dark-bg: #111827;
+    --dark-card: #1f2937;
+    --dark-border: #374151;
+}
+
+/* Custom Components */
+.nav-link {
+    @apply text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors;
+}
+
+.nav-link.active {
+    @apply text-blue-600 bg-blue-50;
+}
+
+.dark .nav-link {
+    @apply text-gray-300 hover:text-blue-400;
+}
+
+.dark .nav-link.active {
+    @apply text-blue-400 bg-blue-900;
+}
+
+/* Toggle Switch */
+.toggle-checkbox {
+    @apply sr-only;
+}
+
+.toggle-checkbox + label {
+    @apply relative block w-12 h-6 bg-gray-300 rounded-full cursor-pointer transition-colors;
+}
+
+.toggle-checkbox:checked + label {
+    @apply bg-blue-600;
+}
+
+.toggle-checkbox + label::after {
+    @apply absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform;
+    content: '';
+}
+
+.toggle-checkbox:checked + label::after {
+    @apply transform translate-x-6;
+}
+
+/* Status Indicators */
+.status-connected {
+    @apply text-green-600;
+}
+
+.status-connecting {
+    @apply text-yellow-600;
+}
+
+.status-disconnected {
+    @apply text-red-600;
+}
+
+.status-error {
+    @apply text-red-600;
+}
+
+/* Activity Log */
+.activity-item {
+    @apply flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg;
+}
+
+.activity-icon {
+    @apply flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm;
+}
+
+.activity-success {
+    @apply bg-green-100 text-green-600;
+}
+
+.activity-warning {
+    @apply bg-yellow-100 text-yellow-600;
+}
+
+.activity-error {
+    @apply bg-red-100 text-red-600;
+}
+
+.activity-info {
+    @apply bg-blue-100 text-blue-600;
+}
+
+/* Charts */
+.chart-container {
+    @apply relative w-full h-64;
+}
+
+/* Loading States */
+.loading-spinner {
+    @apply inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin;
+}
+
+/* Button States */
+.btn-loading {
+    @apply opacity-75 cursor-not-allowed;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        @apply hidden;
+    }
+    
+    .mobile-menu-btn {
+        @apply block;
+    }
+}
+
+/* Dark Mode Improvements */
+.dark {
+    color-scheme: dark;
+}
+
+.dark input[type="range"]::-webkit-slider-track {
+    @apply bg-gray-600;
+}
+
+.dark input[type="range"]::-webkit-slider-thumb {
+    @apply bg-blue-500;
+}
+
+.dark select {
+    @apply bg-gray-700 border-gray-600 text-white;
+}
+
+.dark input {
+    @apply bg-gray-700 border-gray-600 text-white;
+}
+
+/* Animations */
+@keyframes pulse-green {
+    0%, 100% {
+        @apply bg-green-500;
+    }
+    50% {
+        @apply bg-green-400;
+    }
+}
+
+@keyframes pulse-red {
+    0%, 100% {
+        @apply bg-red-500;
+    }
+    50% {
+        @apply bg-red-400;
+    }
+}
+
+@keyframes pulse-yellow {
+    0%, 100% {
+        @apply bg-yellow-500;
+    }
+    50% {
+        @apply bg-yellow-400;
+    }
+}
+
+.status-indicator.connected {
+    animation: pulse-green 2s infinite;
+}
+
+.status-indicator.disconnected {
+    animation: pulse-red 2s infinite;
+}
+
+.status-indicator.connecting {
+    animation: pulse-yellow 1s infinite;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    @apply w-2;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500 dark:bg-gray-500;
+}
+
+/* Notification Styles */
+.notification {
+    @apply fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 min-w-64 max-w-sm;
+}
+
+.notification.success {
+    @apply bg-green-500 text-white;
+}
+
+.notification.error {
+    @apply bg-red-500 text-white;
+}
+
+.notification.warning {
+    @apply bg-yellow-500 text-white;
+}
+
+.notification.info {
+    @apply bg-blue-500 text-white;
+}
+
+/* Card Hover Effects */
+.stat-card {
+    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+}
+
+/* Progress Bars */
+.progress-bar {
+    @apply w-full bg-gray-200 rounded-full h-2;
+}
+
+.progress-fill {
+    @apply h-2 rounded-full transition-all duration-300;
+}
+
+.progress-fill.success {
+    @apply bg-green-500;
+}
+
+.progress-fill.warning {
+    @apply bg-yellow-500;
+}
+
+.progress-fill.danger {
+    @apply bg-red-500;
+}
