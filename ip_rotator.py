@@ -308,14 +308,34 @@ class IPRotator:
         return self.proxy_manager.rotate_proxy()
     
     def _rotate_tor(self) -> bool:
-        """Rotate Tor circuit"""
-        # Ensure Tor controller is connected
-        if not self.tor_controller.is_connected:
-            if not self.tor_controller.connect_to_controller():
-                self.logger.error("Failed to connect to Tor controller")
-                return False
-        
-        return self.tor_controller.new_circuit()
+        """Rotate Tor circuit with robust error handling"""
+        try:
+            # First check if Tor is running
+            if not self.tor_controller.is_tor_running():
+                self.logger.info("Tor is not running, attempting to start...")
+                if not self.tor_controller.start_tor_service():
+                    self.logger.error("Failed to start Tor service")
+                    console.print(f"{Fore.YELLOW}⚠ Tor service could not be started. Skipping Tor rotation.{Style.RESET_ALL}")
+                    return False
+                
+                # Wait for Tor to fully initialize
+                time.sleep(5)
+            
+            # Ensure Tor controller is connected
+            if not self.tor_controller.is_connected:
+                self.logger.info("Connecting to Tor controller...")
+                if not self.tor_controller.connect_to_controller():
+                    self.logger.error("Failed to connect to Tor controller")
+                    console.print(f"{Fore.YELLOW}⚠ Could not connect to Tor controller. Check if stem library is installed.{Style.RESET_ALL}")
+                    return False
+            
+            # Perform the circuit rotation
+            return self.tor_controller.new_circuit()
+            
+        except Exception as e:
+            self.logger.error(f"Error during Tor rotation: {e}")
+            console.print(f"{Fore.YELLOW}⚠ Tor rotation failed: {e}{Style.RESET_ALL}")
+            return False
     
     def _rotate_openvpn(self) -> bool:
         """Rotate OpenVPN connection"""
@@ -434,6 +454,64 @@ class IPRotator:
             response = requests.get('https://httpbin.org/ip', timeout=5)
             return response.status_code == 200
         except:
+            return False
+    
+    def _validate_rotation_methods(self) -> List[str]:
+        """Validate and filter rotation methods based on system capabilities"""
+        available_methods = []
+        
+        for method in self.config.methods:
+            if method == 'proxy':
+                # Proxy should always be available
+                available_methods.append(method)
+            elif method == 'tor':
+                # Check if Tor is available
+                if self._check_tor_availability():
+                    available_methods.append(method)
+                else:
+                    self.logger.warning("Tor method requested but Tor is not available")
+                    console.print(f"{Fore.YELLOW}⚠ Tor rotation disabled: Tor not available on this system{Style.RESET_ALL}")
+            elif method == 'openvpn':
+                # Check if OpenVPN configs are available
+                if self._check_openvpn_availability():
+                    available_methods.append(method)
+                else:
+                    self.logger.warning("OpenVPN method requested but no VPN configs available")
+                    console.print(f"{Fore.YELLOW}⚠ OpenVPN rotation disabled: No VPN configurations found{Style.RESET_ALL}")
+        
+        if not available_methods:
+            # Fallback to proxy if nothing else is available
+            self.logger.warning("No rotation methods available, falling back to proxy only")
+            available_methods = ['proxy']
+        
+        return available_methods
+    
+    def _check_tor_availability(self) -> bool:
+        """Check if Tor is available on this system"""
+        try:
+            # Check if Tor is installed
+            if not self.tor_controller._check_tor_installation():
+                return False
+            
+            # Check if stem library is available for control
+            try:
+                import stem
+                return True
+            except ImportError:
+                self.logger.info("Tor is installed but stem library is missing. Install with: pip install stem")
+                return False
+                
+        except Exception as e:
+            self.logger.debug(f"Error checking Tor availability: {e}")
+            return False
+    
+    def _check_openvpn_availability(self) -> bool:
+        """Check if OpenVPN configurations are available"""
+        try:
+            # Check if OpenVPN manager has configurations
+            return len(self.openvpn_manager.configs) > 0
+        except Exception as e:
+            self.logger.debug(f"Error checking OpenVPN availability: {e}")
             return False
 
 def print_banner():

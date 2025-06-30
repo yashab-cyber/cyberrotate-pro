@@ -59,13 +59,34 @@ class TorController:
     def is_tor_running(self) -> bool:
         """Check if Tor service is running"""
         try:
-            # Try to connect to Tor SOCKS port
+            # Check SOCKS port
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(3)
-            result = sock.connect_ex(('127.0.0.1', self.tor_port))
+            socks_result = sock.connect_ex(('127.0.0.1', self.tor_port))
             sock.close()
-            return result == 0
-        except Exception:
+            
+            if socks_result == 0:
+                # Also check control port if possible
+                try:
+                    ctrl_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    ctrl_sock.settimeout(3)
+                    ctrl_result = ctrl_sock.connect_ex(('127.0.0.1', self.control_port))
+                    ctrl_sock.close()
+                    
+                    if ctrl_result == 0:
+                        self.logger.debug("Both Tor SOCKS and control ports are accessible")
+                    else:
+                        self.logger.debug("Tor SOCKS port accessible but control port is not")
+                    
+                except Exception:
+                    pass
+                
+                return True
+            else:
+                return False
+                
+        except Exception as e:
+            self.logger.debug(f"Error checking Tor status: {e}")
             return False
     
     def start_tor_service(self) -> bool:
@@ -74,12 +95,43 @@ class TorController:
             self.logger.info("Tor service is already running")
             return True
         
+        # First check if Tor is installed
+        if not self._check_tor_installation():
+            self.logger.error("Tor is not installed on this system")
+            self.logger.info("Installation instructions:")
+            self.logger.info(self.install_tor_instructions())
+            return False
+        
         try:
-            # Try to start Tor using stem
+            # Try different methods in order of preference
+            methods = []
+            
             if STEM_AVAILABLE:
-                return self._start_tor_with_stem()
-            else:
-                return self._start_tor_system()
+                methods.append(("stem", self._start_tor_with_stem))
+            
+            methods.append(("system", self._start_tor_system))
+            
+            for method_name, method_func in methods:
+                self.logger.info(f"Attempting to start Tor using {method_name} method...")
+                
+                try:
+                    if method_func():
+                        self.logger.info(f"Tor started successfully using {method_name} method")
+                        return True
+                except Exception as e:
+                    self.logger.warning(f"Failed to start Tor with {method_name} method: {e}")
+                    continue
+            
+            # If all methods failed, provide helpful guidance
+            self.logger.error("Failed to start Tor service using all available methods")
+            self.logger.info("Troubleshooting tips:")
+            self.logger.info("1. Check if Tor is properly installed")
+            self.logger.info("2. Check if ports 9050 and 9051 are available")
+            self.logger.info("3. Run with elevated privileges if needed")
+            self.logger.info("4. Check firewall settings")
+            self.logger.info("5. Try starting Tor manually: 'tor'")
+            
+            return False
                 
         except Exception as e:
             self.logger.error(f"Failed to start Tor service: {e}")
@@ -119,23 +171,47 @@ class TorController:
     
     def _start_tor_system(self) -> bool:
         """Start Tor using system command"""
+        # Extended list of possible Tor locations
         tor_commands = [
             'tor',
             '/usr/bin/tor',
             '/usr/sbin/tor',
+            '/usr/local/bin/tor',
+            '/opt/tor/bin/tor',
+            '/snap/bin/tor',
             'C:\\Program Files\\Tor Browser\\Browser\\TorBrowser\\Tor\\tor.exe',
-            'C:\\Program Files (x86)\\Tor Browser\\Browser\\TorBrowser\\Tor\\tor.exe'
+            'C:\\Program Files (x86)\\Tor Browser\\Browser\\TorBrowser\\Tor\\tor.exe',
+            'C:\\Users\\' + os.environ.get('USERNAME', '') + '\\Desktop\\Tor Browser\\Browser\\TorBrowser\\Tor\\tor.exe',
+            '/Applications/TorBrowser.app/Contents/MacOS/Tor/tor'
         ]
+        
+        # Check if Tor is available via package manager first
+        if not self._check_tor_installation():
+            self.logger.warning("Tor may not be installed. Please install Tor using your system package manager.")
+            self.logger.info("Installation commands:")
+            self.logger.info("Ubuntu/Debian: sudo apt-get install tor")
+            self.logger.info("CentOS/RHEL: sudo yum install tor")
+            self.logger.info("macOS: brew install tor")
+            self.logger.info("Windows: Download from https://www.torproject.org/")
         
         for tor_cmd in tor_commands:
             try:
+                # Check if command exists
+                if not self._command_exists(tor_cmd):
+                    continue
+                    
                 self.logger.info(f"Trying to start Tor with command: {tor_cmd}")
                 
-                # Create Tor configuration
+                # Create Tor configuration with better compatibility
                 tor_config = f"""
 SocksPort {self.tor_port}
 ControlPort {self.control_port}
 DataDirectory {self._get_tor_data_directory()}
+GeoIPFile /usr/share/tor/geoip
+GeoIPv6File /usr/share/tor/geoip6
+Log notice file {os.path.join(self._get_tor_data_directory(), 'tor.log')}
+PidFile {os.path.join(self._get_tor_data_directory(), 'tor.pid')}
+RunAsDaemon 0
 """
                 
                 # Write temporary config file
@@ -145,21 +221,30 @@ DataDirectory {self._get_tor_data_directory()}
                 with open(config_path, 'w') as f:
                     f.write(tor_config)
                 
-                # Start Tor process
+                # Start Tor process with better error handling
                 self.tor_process = subprocess.Popen(
                     [tor_cmd, '-f', config_path],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
-                    text=True
+                    text=True,
+                    cwd=self._get_tor_data_directory()
                 )
                 
-                # Wait for Tor to start
-                time.sleep(10)
-                
-                if self.is_tor_running():
-                    self.logger.info("Tor service started successfully")
-                    return True
+                # Wait for Tor to start with progress checking
+                for i in range(20):  # Wait up to 20 seconds
+                    time.sleep(1)
+                    if self.is_tor_running():
+                        self.logger.info("Tor service started successfully")
+                        return True
+                    if self.tor_process.poll() is not None:
+                        # Process ended, check for errors
+                        stdout, stderr = self.tor_process.communicate()
+                        self.logger.error(f"Tor process ended early. stderr: {stderr}")
+                        break
                     
+            except FileNotFoundError:
+                self.logger.debug(f"Tor command not found: {tor_cmd}")
+                continue
             except Exception as e:
                 self.logger.debug(f"Failed to start Tor with {tor_cmd}: {e}")
                 continue
@@ -384,6 +469,69 @@ DataDirectory {self._get_tor_data_directory()}
         except Exception as e:
             self.logger.error(f"Error checking hibernation status: {e}")
             return False
+
+    def _check_tor_installation(self) -> bool:
+        """Check if Tor is properly installed on the system"""
+        tor_paths = [
+            '/usr/bin/tor',
+            '/usr/sbin/tor',
+            '/usr/local/bin/tor',
+            '/opt/tor/bin/tor',
+            '/snap/bin/tor'
+        ]
+        
+        # Check common installation paths
+        for path in tor_paths:
+            if os.path.exists(path) and os.access(path, os.X_OK):
+                return True
+        
+        # Check if tor is in PATH
+        return self._command_exists('tor')
+    
+    def _command_exists(self, command: str) -> bool:
+        """Check if a command exists and is executable"""
+        try:
+            if os.path.isfile(command) and os.access(command, os.X_OK):
+                return True
+            
+            # Check if command is in PATH
+            if sys.platform == 'win32':
+                # Windows - check with 'where'
+                result = subprocess.run(['where', command], 
+                                      capture_output=True, text=True)
+                return result.returncode == 0
+            else:
+                # Unix-like - check with 'which'
+                result = subprocess.run(['which', command], 
+                                      capture_output=True, text=True)
+                return result.returncode == 0
+        except:
+            return False
+    
+    def install_tor_instructions(self) -> str:
+        """Get Tor installation instructions for the current platform"""
+        instructions = []
+        
+        if sys.platform.startswith('linux'):
+            instructions.append("Linux Installation:")
+            instructions.append("  Ubuntu/Debian: sudo apt-get update && sudo apt-get install tor")
+            instructions.append("  CentOS/RHEL: sudo yum install tor")
+            instructions.append("  Fedora: sudo dnf install tor")
+            instructions.append("  Arch: sudo pacman -S tor")
+        elif sys.platform == 'darwin':
+            instructions.append("macOS Installation:")
+            instructions.append("  Homebrew: brew install tor")
+            instructions.append("  MacPorts: sudo port install tor")
+        elif sys.platform == 'win32':
+            instructions.append("Windows Installation:")
+            instructions.append("  1. Download Tor Browser from https://www.torproject.org/")
+            instructions.append("  2. Or install via Chocolatey: choco install tor")
+            instructions.append("  3. Or use Windows Subsystem for Linux (WSL)")
+        
+        instructions.append("\nAlternatively, you can use CyberRotate Pro without Tor by")
+        instructions.append("using only proxy or VPN rotation methods.")
+        
+        return "\n".join(instructions)
 
     # GUI wrapper methods for compatibility
     def start(self) -> bool:

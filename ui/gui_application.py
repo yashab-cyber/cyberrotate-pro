@@ -630,62 +630,130 @@ class CyberRotateGUI:
         threading.Thread(target=disconnect_vpn_thread, daemon=True).start()
         
     def start_tor(self):
-        """Start Tor service"""
+        """Start Tor service with enhanced error handling"""
         self.set_status("Starting Tor...")
         
         def start_tor_thread():
             try:
-                result = self.tor_controller.start()
+                # First check if Tor is already running
+                if self.tor_controller.is_tor_running():
+                    self.tor_status = "Running"
+                    self.root.after(0, lambda: self.log_message("Tor is already running"))
+                    self.root.after(0, lambda: self.set_status("Tor is already running"))
+                    self.root.after(0, self.update_tor_status)
+                    return
+                
+                # Check if Tor is installed
+                if not self.tor_controller._check_tor_installation():
+                    self.tor_status = "Not Installed"
+                    self.root.after(0, lambda: self.log_message("Tor is not installed on this system", "ERROR"))
+                    self.root.after(0, lambda: self.show_tor_installation_dialog())
+                    self.root.after(0, lambda: self.set_status("Tor not installed"))
+                    self.root.after(0, self.update_tor_status)
+                    return
+                
+                # Start Tor service
+                self.root.after(0, lambda: self.log_message("Starting Tor service..."))
+                result = self.tor_controller.start_tor_service()
+                
                 if result:
                     self.tor_status = "Running"
-                    self.root.after(0, lambda: self.log_message("Tor started"))
-                    self.root.after(0, lambda: self.set_status("Tor started"))
+                    self.root.after(0, lambda: self.log_message("Tor started successfully"))
+                    self.root.after(0, lambda: self.set_status("Tor started successfully"))
+                    
+                    # Try to connect to controller
+                    if self.tor_controller.connect_to_controller():
+                        self.root.after(0, lambda: self.log_message("Connected to Tor controller"))
+                        
+                        # Test the connection
+                        current_ip = self.tor_controller.get_current_ip()
+                        if current_ip:
+                            self.root.after(0, lambda: self.log_message(f"Tor connection verified. IP: {current_ip}"))
+                        else:
+                            self.root.after(0, lambda: self.log_message("Tor started but connection test failed", "WARNING"))
+                    else:
+                        self.root.after(0, lambda: self.log_message("Tor started but controller connection failed", "WARNING"))
                 else:
                     self.tor_status = "Failed"
-                    self.root.after(0, lambda: self.log_message("Tor start failed", "ERROR"))
+                    self.root.after(0, lambda: self.log_message("Failed to start Tor service", "ERROR"))
                     self.root.after(0, lambda: self.set_status("Tor start failed"))
                     
             except Exception as e:
                 self.tor_status = "Error"
                 self.root.after(0, lambda: self.log_message(f"Tor start error: {e}", "ERROR"))
                 self.root.after(0, lambda: self.set_status("Tor start error"))
+            finally:
+                self.root.after(0, self.update_tor_status)
                 
         threading.Thread(target=start_tor_thread, daemon=True).start()
         
     def stop_tor(self):
-        """Stop Tor service"""
+        """Stop Tor service with enhanced cleanup"""
         self.set_status("Stopping Tor...")
         
         def stop_tor_thread():
             try:
-                result = self.tor_controller.stop()
-                if result:
+                if not self.tor_controller.is_tor_running():
                     self.tor_status = "Stopped"
-                    self.root.after(0, lambda: self.log_message("Tor stopped"))
-                    self.root.after(0, lambda: self.set_status("Tor stopped"))
-                else:
-                    self.root.after(0, lambda: self.log_message("Tor stop failed", "ERROR"))
-                    self.root.after(0, lambda: self.set_status("Tor stop failed"))
+                    self.root.after(0, lambda: self.log_message("Tor is already stopped"))
+                    self.root.after(0, lambda: self.set_status("Tor is already stopped"))
+                    self.root.after(0, self.update_tor_status)
+                    return
+                
+                # Stop Tor service
+                self.tor_controller.stop_tor_service()
+                self.tor_status = "Stopped"
+                self.root.after(0, lambda: self.log_message("Tor stopped successfully"))
+                self.root.after(0, lambda: self.set_status("Tor stopped"))
                     
             except Exception as e:
                 self.root.after(0, lambda: self.log_message(f"Tor stop error: {e}", "ERROR"))
                 self.root.after(0, lambda: self.set_status("Tor stop error"))
+            finally:
+                self.root.after(0, self.update_tor_status)
                 
         threading.Thread(target=stop_tor_thread, daemon=True).start()
         
     def new_tor_identity(self):
-        """Get new Tor identity"""
+        """Get new Tor identity with enhanced feedback"""
         self.set_status("Getting new Tor identity...")
         
         def new_identity_thread():
             try:
+                # Check if Tor is running
+                if not self.tor_controller.is_tor_running():
+                    self.root.after(0, lambda: self.log_message("Tor is not running. Please start Tor first.", "ERROR"))
+                    self.root.after(0, lambda: self.set_status("Tor not running"))
+                    return
+                
+                # Get current IP for comparison
+                old_ip = self.tor_controller.get_current_ip()
+                if old_ip:
+                    self.root.after(0, lambda: self.log_message(f"Current IP: {old_ip}"))
+                
+                # Create new circuit
                 result = self.tor_controller.new_circuit()
+                
                 if result:
-                    self.root.after(0, lambda: self.log_message("New Tor identity acquired"))
-                    self.root.after(0, lambda: self.set_status("New Tor identity acquired"))
+                    self.root.after(0, lambda: self.log_message("New Tor circuit created"))
+                    
+                    # Wait a moment and get new IP
+                    time.sleep(3)
+                    new_ip = self.tor_controller.get_current_ip()
+                    
+                    if new_ip:
+                        if new_ip != old_ip:
+                            self.root.after(0, lambda: self.log_message(f"New IP acquired: {new_ip}"))
+                            self.root.after(0, lambda: self.set_status("New Tor identity acquired"))
+                        else:
+                            self.root.after(0, lambda: self.log_message("New circuit created but IP unchanged", "WARNING"))
+                            self.root.after(0, lambda: self.set_status("Circuit rotated (IP unchanged)"))
+                    else:
+                        self.root.after(0, lambda: self.log_message("New circuit created but IP verification failed", "WARNING"))
+                        self.root.after(0, lambda: self.set_status("Circuit rotated"))
                 else:
-                    self.root.after(0, lambda: self.log_message("New identity failed", "ERROR"))
-                    self.root.after(0, lambda: self.set_status("New identity failed"))
+                    self.root.after(0, lambda: self.log_message("Failed to create new circuit", "ERROR"))
+                    self.root.after(0, lambda: self.set_status("Circuit rotation failed"))
                     
             except Exception as e:
                 self.root.after(0, lambda: self.log_message(f"New identity error: {e}", "ERROR"))
@@ -824,6 +892,176 @@ class CyberRotateGUI:
         self.set_status("Ready")
         self.root.mainloop()
 
+    def show_tor_installation_dialog(self):
+        """Show Tor installation instructions dialog"""
+        instructions = self.tor_controller.install_tor_instructions()
+        
+        # Create a new window for installation instructions
+        install_window = tk.Toplevel(self.root)
+        install_window.title("Tor Installation Required")
+        install_window.geometry("600x400")
+        install_window.transient(self.root)
+        install_window.grab_set()
+        
+        # Main frame
+        main_frame = ttk.Frame(install_window, padding="20")
+        main_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Title
+        title_label = ttk.Label(main_frame, text="Tor Installation Required", 
+                               font=('Arial', 14, 'bold'))
+        title_label.pack(anchor="w", pady=(0, 10))
+        
+        # Instructions text
+        text_widget = scrolledtext.ScrolledText(main_frame, wrap=tk.WORD, 
+                                              width=70, height=15)
+        text_widget.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        text_widget.insert(tk.END, instructions)
+        text_widget.config(state=tk.DISABLED)
+        
+        # Buttons frame
+        button_frame = ttk.Frame(main_frame)
+        button_frame.pack(fill="x")
+        
+        ttk.Button(button_frame, text="Close", 
+                  command=install_window.destroy).pack(side=tk.RIGHT, padx=(10, 0))
+        
+        ttk.Button(button_frame, text="Test Tor Installation", 
+                  command=lambda: self.test_tor_installation(install_window)).pack(side=tk.RIGHT)
+    
+    def test_tor_installation(self, parent_window=None):
+        """Test Tor installation and update status"""
+        def test_thread():
+            try:
+                is_installed = self.tor_controller._check_tor_installation()
+                
+                if is_installed:
+                    self.root.after(0, lambda: self.log_message("Tor installation detected!"))
+                    if parent_window:
+                        self.root.after(0, parent_window.destroy)
+                else:
+                    self.root.after(0, lambda: self.log_message("Tor is still not installed", "WARNING"))
+                    
+                self.root.after(0, self.update_tor_status)
+                
+            except Exception as e:
+                self.root.after(0, lambda: self.log_message(f"Error testing Tor installation: {e}", "ERROR"))
+        
+        threading.Thread(target=test_thread, daemon=True).start()
+    
+    def update_tor_status(self):
+        """Update Tor status indicator in GUI"""
+        try:
+            is_running = self.tor_controller.is_tor_running()
+            is_connected = self.tor_controller.is_connected
+            
+            if is_running and is_connected:
+                self.tor_indicator.config(fg="green")
+                self.tor_status = "Connected"
+            elif is_running:
+                self.tor_indicator.config(fg="orange")
+                self.tor_status = "Running"
+            else:
+                self.tor_indicator.config(fg="red")
+                if not self.tor_controller._check_tor_installation():
+                    self.tor_status = "Not Installed"
+                else:
+                    self.tor_status = "Stopped"
+            
+            # Update status label
+            if hasattr(self, 'tor_status_label'):
+                self.tor_status_label.config(text=f"Status: {self.tor_status}")
+                
+        except Exception as e:
+            self.log_message(f"Error updating Tor status: {e}", "ERROR")
+    
+    def show_tor_diagnostics(self):
+        """Show Tor diagnostics window"""
+        diag_window = tk.Toplevel(self.root)
+        diag_window.title("Tor Diagnostics")
+        diag_window.geometry("800x600")
+        diag_window.transient(self.root)
+        diag_window.grab_set()
+        
+        # Main frame
+        main_frame = ttk.Frame(diag_window, padding="20")
+        main_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Title
+        title_label = ttk.Label(main_frame, text="Tor Network Diagnostics", 
+                               font=('Arial', 14, 'bold'))
+        title_label.pack(anchor="w", pady=(0, 10))
+        
+        # Diagnostics text area
+        self.diag_text = scrolledtext.ScrolledText(main_frame, wrap=tk.WORD, 
+                                                  width=90, height=25)
+        self.diag_text.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        
+        # Buttons frame
+        button_frame = ttk.Frame(main_frame)
+        button_frame.pack(fill="x")
+        
+        ttk.Button(button_frame, text="Run Diagnostics", 
+                  command=self.run_tor_diagnostics).pack(side=tk.LEFT)
+        
+        ttk.Button(button_frame, text="Clear", 
+                  command=lambda: self.diag_text.delete(1.0, tk.END)).pack(side=tk.LEFT, padx=(10, 0))
+        
+        ttk.Button(button_frame, text="Close", 
+                  command=diag_window.destroy).pack(side=tk.RIGHT)
+    
+    def run_tor_diagnostics(self):
+        """Run comprehensive Tor diagnostics"""
+        def diag_thread():
+            try:
+                self.root.after(0, lambda: self.diag_text.delete(1.0, tk.END))
+                self.root.after(0, lambda: self.diag_text.insert(tk.END, "Running Tor diagnostics...\n\n"))
+                
+                # Check installation
+                is_installed = self.tor_controller._check_tor_installation()
+                self.root.after(0, lambda: self.diag_text.insert(tk.END, f"Tor Installation: {'✓ FOUND' if is_installed else '✗ NOT FOUND'}\n"))
+                
+                if not is_installed:
+                    instructions = self.tor_controller.install_tor_instructions()
+                    self.root.after(0, lambda: self.diag_text.insert(tk.END, f"\n{instructions}\n"))
+                    return
+                
+                # Check if running
+                is_running = self.tor_controller.is_tor_running()
+                self.root.after(0, lambda: self.diag_text.insert(tk.END, f"Tor Service: {'✓ RUNNING' if is_running else '✗ STOPPED'}\n"))
+                
+                if not is_running:
+                    self.root.after(0, lambda: self.diag_text.insert(tk.END, "Note: Start Tor service to run connectivity tests\n"))
+                    return
+                
+                # Check controller connection
+                is_connected = self.tor_controller.is_connected or self.tor_controller.connect_to_controller()
+                self.root.after(0, lambda: self.diag_text.insert(tk.END, f"Controller Connection: {'✓ CONNECTED' if is_connected else '✗ FAILED'}\n"))
+                
+                # Test connectivity
+                if is_connected:
+                    current_ip = self.tor_controller.get_current_ip()
+                    if current_ip:
+                        self.root.after(0, lambda: self.diag_text.insert(tk.END, f"Current Tor IP: {current_ip}\n"))
+                        self.root.after(0, lambda: self.diag_text.insert(tk.END, "Network Connectivity: ✓ WORKING\n"))
+                    else:
+                        self.root.after(0, lambda: self.diag_text.insert(tk.END, "Network Connectivity: ✗ FAILED\n"))
+                    
+                    # Get statistics
+                    stats = self.tor_controller.get_statistics()
+                    self.root.after(0, lambda: self.diag_text.insert(tk.END, f"\nStatistics:\n"))
+                    self.root.after(0, lambda: self.diag_text.insert(tk.END, f"  Circuits Created: {stats.get('circuit_count', 0)}\n"))
+                    self.root.after(0, lambda: self.diag_text.insert(tk.END, f"  Successful Rotations: {stats.get('successful_rotations', 0)}\n"))
+                    self.root.after(0, lambda: self.diag_text.insert(tk.END, f"  Failed Rotations: {stats.get('failed_rotations', 0)}\n"))
+                    self.root.after(0, lambda: self.diag_text.insert(tk.END, f"  Success Rate: {stats.get('success_rate', 0):.1f}%\n"))
+                
+                self.root.after(0, lambda: self.diag_text.insert(tk.END, "\nDiagnostics completed.\n"))
+                
+            except Exception as e:
+                self.root.after(0, lambda: self.diag_text.insert(tk.END, f"Diagnostics error: {e}\n"))
+        
+        threading.Thread(target=diag_thread, daemon=True).start()
+        
 def print_banner():
     """Print the CyberRotate Pro banner"""
     banner = """
