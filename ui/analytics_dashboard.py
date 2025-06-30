@@ -4,6 +4,12 @@ CyberRotate Pro - Production Analytics Dashboard
 Real-time monitoring and analytics for enterprise deployments
 """
 
+import sys
+import os
+
+# Add parent directory to path for imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import dash
 from dash import dcc, html, Input, Output, callback_context
 import plotly.graph_objs as go
@@ -15,18 +21,19 @@ from datetime import datetime, timedelta
 import threading
 import time
 from typing import Dict, List, Any
-import os
 
-from utils.logger import Logger
+from utils.logger import setup_logger
 from utils.stats_collector import StatsCollector
 from core.network_monitor import NetworkMonitor
+from core.tor_controller import TorController
 
 class AnalyticsDashboard:
     """Production analytics dashboard for CyberRotate Pro"""
     
     def __init__(self, config: Dict[str, Any]):
         self.config = config
-        self.logger = Logger("dashboard", debug=config.get('debug', False))
+        self.logger = setup_logger(debug=config.get('debug', False))
+        self.tor_controller = TorController(self.logger)
         
         # Initialize Dash app
         self.app = dash.Dash(__name__, external_stylesheets=[
@@ -35,8 +42,8 @@ class AnalyticsDashboard:
         ])
         
         # Initialize components
-        self.stats_collector = StatsCollector(self.logger.logger)
-        self.network_monitor = NetworkMonitor(self.logger.logger)
+        self.stats_collector = StatsCollector(self.logger)
+        self.network_monitor = NetworkMonitor(self.logger)
         
         # Database connection
         self.db_path = config.get('database_path', 'data/api_server.db')
@@ -103,10 +110,10 @@ class AnalyticsDashboard:
                     dcc.Graph(id="rotation-timeline")
                 ], className="six columns chart-container"),
                 
-                # Service status
+                # Tor status and metrics
                 html.Div([
-                    html.H3("Service Status", className="chart-title"),
-                    dcc.Graph(id="service-status")
+                    html.H3("Tor Network Status", className="chart-title"),
+                    dcc.Graph(id="tor-status")
                 ], className="six columns chart-container")
             ], className="row"),
             
@@ -117,10 +124,10 @@ class AnalyticsDashboard:
                     dcc.Graph(id="geo-distribution")
                 ], className="six columns chart-container"),
                 
-                # API usage
+                # Service health overview
                 html.Div([
-                    html.H3("API Usage Statistics", className="chart-title"),
-                    dcc.Graph(id="api-usage")
+                    html.H3("Service Health Overview", className="chart-title"),
+                    dcc.Graph(id="service-health")
                 ], className="six columns chart-container")
             ], className="row"),
             
@@ -253,16 +260,31 @@ class AnalyticsDashboard:
         def update_metrics(n):
             """Update top-level metrics"""
             try:
-                # Get current IP
-                ip_info = self.network_monitor.get_public_ip()
-                current_ip = ip_info if isinstance(ip_info, str) else ip_info.get('ip', 'Unknown') if ip_info else 'Unknown'
+                # Get current IP - try Tor first, then regular
+                current_ip = "Unknown"
+                try:
+                    if self.tor_controller.is_tor_running():
+                        tor_ip = self.tor_controller.get_current_ip()
+                        if tor_ip:
+                            current_ip = f"{tor_ip} (Tor)"
+                        else:
+                            # Fallback to regular IP check
+                            ip_info = self.network_monitor.get_public_ip()
+                            current_ip = ip_info if isinstance(ip_info, str) else ip_info.get('ip', 'Unknown') if ip_info else 'Unknown'
+                    else:
+                        ip_info = self.network_monitor.get_public_ip()
+                        current_ip = ip_info if isinstance(ip_info, str) else ip_info.get('ip', 'Unknown') if ip_info else 'Unknown'
+                except Exception as e:
+                    self.logger.debug(f"Error getting IP: {e}")
+                    current_ip = "Error"
                 
                 # Get statistics
                 stats = self.stats_collector.get_stats()
-                rotation_stats = stats.get('rotations', {})
+                tor_stats = self.tor_controller.get_statistics()
                 
-                rotation_count = rotation_stats.get('total', 0)
-                success_rate = f"{rotation_stats.get('success_rate', 0):.1f}%"
+                # Combine rotation stats from both sources
+                rotation_count = tor_stats.get('circuit_count', 0) + stats.get('rotations', {}).get('total', 0)
+                success_rate = f"{tor_stats.get('success_rate', 0):.1f}%"
                 
                 # Calculate uptime
                 uptime_seconds = getattr(self, 'start_time', time.time())
@@ -273,6 +295,7 @@ class AnalyticsDashboard:
                 dashboard_data = {
                     'current_ip': current_ip,
                     'stats': stats,
+                    'tor_stats': tor_stats,
                     'timestamp': datetime.now().isoformat()
                 }
                 
@@ -347,27 +370,89 @@ class AnalyticsDashboard:
                 return {'data': [], 'layout': {'title': 'Error loading data'}}
         
         @self.app.callback(
-            Output('service-status', 'figure'),
+            Output('tor-status', 'figure'),
             [Input('dashboard-data', 'data')]
         )
-        def update_service_status(dashboard_data):
-            """Update service status chart"""
+        def update_tor_status(dashboard_data):
+            """Update Tor network status chart"""
             try:
-                # Get service statuses
-                services = ['Proxy', 'VPN', 'Tor', 'API Server']
-                statuses = ['Active', 'Inactive', 'Active', 'Active']  # Mock data for now
-                colors = ['#28a745' if status == 'Active' else '#dc3545' for status in statuses]
+                # Get Tor statistics
+                tor_stats = self.tor_controller.get_statistics()
+                
+                # Create metrics display
+                metrics = ['Running', 'Connected', 'Circuits', 'Success Rate']
+                values = [
+                    1 if tor_stats.get('is_tor_running') else 0,
+                    1 if tor_stats.get('is_connected') else 0,
+                    tor_stats.get('circuit_count', 0),
+                    tor_stats.get('success_rate', 0) / 100  # Convert to 0-1 scale
+                ]
+                
+                colors = ['#28a745', '#007bff', '#ffc107', '#17a2b8']
+                
+                fig = go.Figure()
+                
+                # Create bar chart for Tor metrics
+                fig.add_trace(go.Bar(
+                    x=metrics,
+                    y=values,
+                    marker_color=colors,
+                    text=[
+                        'Running' if values[0] else 'Stopped',
+                        'Connected' if values[1] else 'Disconnected', 
+                        f'{values[2]} circuits',
+                        f'{values[3]*100:.1f}%'
+                    ],
+                    textposition='auto'
+                ))
+                
+                fig.update_layout(
+                    title='Tor Network Status & Performance',
+                    xaxis_title='Metrics',
+                    yaxis_title='Value',
+                    template='plotly_white',
+                    showlegend=False
+                )
+                
+                return fig
+                
+            except Exception as e:
+                self.logger.error(f"Error updating Tor status: {e}")
+                return {'data': [], 'layout': {'title': 'Error loading Tor status'}}
+        
+        @self.app.callback(
+            Output('service-health', 'figure'),
+            [Input('dashboard-data', 'data')]
+        )
+        def update_service_health(dashboard_data):
+            """Update comprehensive service health chart"""
+            try:
+                # Check all service statuses
+                services_status = {
+                    'Tor': self.tor_controller.is_tor_running(),
+                    'Tor Controller': self.tor_controller.is_connected,
+                    'Network Monitor': True,  # Assume running if dashboard is working
+                    'Stats Collector': True,
+                }
+                
+                # Add Tor installation status
+                tor_installed = self.tor_controller._check_tor_installation()
+                services_status['Tor Installed'] = tor_installed
+                
+                services = list(services_status.keys())
+                statuses = [1 if status else 0 for status in services_status.values()]
+                colors = ['#28a745' if status else '#dc3545' for status in statuses]
                 
                 fig = go.Figure(data=[go.Bar(
                     x=services,
-                    y=[1 if status == 'Active' else 0 for status in statuses],
+                    y=statuses,
                     marker_color=colors,
-                    text=statuses,
+                    text=['✓ Active' if status else '✗ Inactive' for status in statuses],
                     textposition='auto'
                 )])
                 
                 fig.update_layout(
-                    title='Service Status Overview',
+                    title='Comprehensive Service Health',
                     xaxis_title='Services',
                     yaxis_title='Status',
                     template='plotly_white',
@@ -378,7 +463,8 @@ class AnalyticsDashboard:
                 return fig
                 
             except Exception as e:
-                return {'data': [], 'layout': {'title': 'Error loading service status'}}
+                self.logger.error(f"Error updating service health: {e}")
+                return {'data': [], 'layout': {'title': 'Error loading service health'}}
         
         @self.app.callback(
             Output('geo-distribution', 'figure'),
@@ -409,81 +495,53 @@ class AnalyticsDashboard:
                 return {'data': [], 'layout': {'title': 'Error loading geographic data'}}
         
         @self.app.callback(
-            Output('api-usage', 'figure'),
-            [Input('dashboard-data', 'data')]
-        )
-        def update_api_usage(dashboard_data):
-            """Update API usage chart"""
-            try:
-                # Get API usage data
-                api_data = self.get_api_usage_data(hours=24)
-                
-                if not api_data:
-                    return {
-                        'data': [],
-                        'layout': {
-                            'title': 'No API usage data available',
-                            'template': 'plotly_white'
-                        }
-                    }
-                
-                endpoints = [item['endpoint'] for item in api_data]
-                counts = [item['count'] for item in api_data]
-                
-                fig = go.Figure(data=[go.Bar(
-                    x=counts,
-                    y=endpoints,
-                    orientation='h',
-                    marker_color='#007bff'
-                )])
-                
-                fig.update_layout(
-                    title='API Endpoint Usage (Last 24 Hours)',
-                    xaxis_title='Number of Requests',
-                    yaxis_title='Endpoints',
-                    template='plotly_white'
-                )
-                
-                return fig
-                
-            except Exception as e:
-                return {'data': [], 'layout': {'title': 'Error loading API usage data'}}
-        
-        @self.app.callback(
             Output('performance-metrics', 'figure'),
             [Input('dashboard-data', 'data')]
         )
         def update_performance_metrics(dashboard_data):
-            """Update performance metrics chart"""
+            """Update performance metrics chart including Tor performance"""
             try:
-                # Mock performance data
+                # Get Tor statistics over time
+                tor_stats = dashboard_data.get('tor_stats', {})
+                
+                # Mock performance data with real Tor metrics
                 times = pd.date_range(start=datetime.now() - timedelta(hours=24), 
                                     end=datetime.now(), freq='H')
-                cpu_usage = [20 + 10 * (0.5 - abs(0.5 - ((i/len(times)) % 1))) for i in range(len(times))]
-                memory_usage = [30 + 15 * (0.5 - abs(0.5 - (((i+12)/len(times)) % 1))) for i in range(len(times))]
+                
+                # Create mock data but include real Tor success rate
+                success_rates = [tor_stats.get('success_rate', 85) + 
+                               10 * (0.5 - abs(0.5 - ((i/len(times)) % 1))) for i in range(len(times))]
+                circuit_counts = [max(0, tor_stats.get('circuit_count', 5) + 
+                                5 * (0.5 - abs(0.5 - (((i+6)/len(times)) % 1)))) for i in range(len(times))]
                 
                 fig = go.Figure()
                 
                 fig.add_trace(go.Scatter(
                     x=times,
-                    y=cpu_usage,
+                    y=success_rates,
                     mode='lines',
-                    name='CPU Usage (%)',
-                    line=dict(color='#007bff')
+                    name='Success Rate (%)',
+                    line=dict(color='#28a745')
                 ))
                 
                 fig.add_trace(go.Scatter(
                     x=times,
-                    y=memory_usage,
+                    y=circuit_counts,
                     mode='lines',
-                    name='Memory Usage (%)',
-                    line=dict(color='#28a745')
+                    name='Active Circuits',
+                    line=dict(color='#007bff'),
+                    yaxis='y2'
                 ))
                 
                 fig.update_layout(
-                    title='System Performance Metrics (Last 24 Hours)',
+                    title='Network Performance Metrics (Last 24 Hours)',
                     xaxis_title='Time',
-                    yaxis_title='Usage (%)',
+                    yaxis_title='Success Rate (%)',
+                    yaxis2=dict(
+                        title='Active Circuits',
+                        overlaying='y',
+                        side='right'
+                    ),
                     template='plotly_white',
                     hovermode='x unified'
                 )
@@ -491,6 +549,7 @@ class AnalyticsDashboard:
                 return fig
                 
             except Exception as e:
+                self.logger.error(f"Error updating performance metrics: {e}")
                 return {'data': [], 'layout': {'title': 'Error loading performance data'}}
         
         @self.app.callback(
